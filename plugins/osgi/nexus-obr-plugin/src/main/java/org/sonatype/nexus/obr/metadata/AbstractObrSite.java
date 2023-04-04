@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.obr.metadata;
 
+import io.openpixee.security.ZipSecurity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.ZipEntry;
@@ -28,7 +29,7 @@ public abstract class AbstractObrSite
     {
         if ( "application/zip".equalsIgnoreCase( getContentType() ) )
         {
-            final ZipInputStream zis = new ZipInputStream( openRawStream() );
+            final ZipInputStream zis = ZipSecurity.createHardenedInputStream(openRawStream());
             for ( ZipEntry e = zis.getNextEntry(); e != null; e = zis.getNextEntry() )
             {
                 // scan for the specific OBR entry
