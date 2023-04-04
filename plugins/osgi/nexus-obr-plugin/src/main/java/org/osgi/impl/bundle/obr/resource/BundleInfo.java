@@ -12,6 +12,7 @@
  */
 package org.osgi.impl.bundle.obr.resource;
 
+import io.openpixee.security.ZipSecurity;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
@@ -56,7 +57,7 @@ public class BundleInfo {
 		this.bundleJar = bundleJar;
 */
 		this.repository = repository;
-		this.zis = new ZipInputStream(is);
+		this.zis = ZipSecurity.createHardenedInputStream(is);
 		this.remoteUrl = remoteUrl;
 		this.size = size;
 
