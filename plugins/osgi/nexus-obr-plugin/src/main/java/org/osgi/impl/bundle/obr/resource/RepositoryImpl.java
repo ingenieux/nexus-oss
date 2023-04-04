@@ -12,6 +12,7 @@
  */
 package org.osgi.impl.bundle.obr.resource;
 
+import io.openpixee.security.ZipSecurity;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -310,7 +311,7 @@ public class RepositoryImpl implements Repository {
 			try {
 				
 				if ( url.getPath().endsWith(".zip")) {
-					ZipInputStream zin = new ZipInputStream( url.openStream() );
+					ZipInputStream zin = ZipSecurity.createHardenedInputStream(url.openStream());
 					ZipEntry entry = zin.getNextEntry();
 					while ( entry != null ) {
 						if ( entry.getName().equals("repository.xml")) {
