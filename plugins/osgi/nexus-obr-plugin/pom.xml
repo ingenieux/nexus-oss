@@ -30,6 +30,7 @@
   <properties>
     <pluginName>Nexus OBR Plugin</pluginName>
     <pluginDescription>Adds a repository type for OBR repositories.</pluginDescription>
+    <versions.java-security-toolkit>1.0.0</versions.java-security-toolkit>
   </properties>
 
   <dependencies>
@@ -62,6 +63,10 @@
       <groupId>org.sonatype.nexus</groupId>
       <artifactId>nexus-plugin-testsupport</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.openpixee</groupId>
+      <artifactId>java-security-toolkit</artifactId>
     </dependency>
   </dependencies>
 
@@ -127,5 +132,13 @@
       </plugin>
     </plugins>
   </build>
-
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.openpixee</groupId>
+        <artifactId>java-security-toolkit</artifactId>
+        <version>${versions.java-security-toolkit}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
