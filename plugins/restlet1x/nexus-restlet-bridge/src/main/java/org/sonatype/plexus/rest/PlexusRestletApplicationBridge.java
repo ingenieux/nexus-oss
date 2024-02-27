@@ -12,6 +12,7 @@
  */
 package org.sonatype.plexus.rest;
 
+import io.github.pixee.security.xstream.HardeningConverter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -300,6 +301,7 @@ public class PlexusRestletApplicationBridge
     protected final XStream createAndConfigureXstream( HierarchicalStreamDriver driver )
     {
         XStream xstream = new XStream( driver );
+        xstream.registerConverter(new HardeningConverter());
 
         xstream.setClassLoader( uberClassLoader );
 
