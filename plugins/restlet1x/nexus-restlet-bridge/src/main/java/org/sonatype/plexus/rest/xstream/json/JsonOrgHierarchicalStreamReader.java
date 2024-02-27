@@ -12,6 +12,7 @@
  */
 package org.sonatype.plexus.rest.xstream.json;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -294,11 +295,11 @@ public class JsonOrgHierarchicalStreamReader
         String x = null;
         try
         {
-            x = in.readLine();
+            x = BoundedLineReader.readLine(in, 5_000_000);
             while ( x != null )
             {
                 jsonStringB.append( x );
-                x = in.readLine();
+                x = BoundedLineReader.readLine(in, 5_000_000);
             }
             in.close();
 
