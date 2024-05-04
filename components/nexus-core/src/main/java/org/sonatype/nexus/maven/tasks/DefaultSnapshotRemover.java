@@ -451,7 +451,7 @@ public class DefaultSnapshotRemover
                     if ( gav != null )
                     {
                         // if we find a pom, check for delete on release
-                        if ( !gav.isHash() && !gav.isSignature() && gav.getExtension().equals( "pom" ) )
+                        if ( !gav.isHash() && !gav.isSignature() && "pom".equals (gav.getExtension() ) )
                         {
                             if ( request.isRemoveIfReleaseExists()
                                 && releaseExistsForSnapshot( gav, item.getItemContext() ) )

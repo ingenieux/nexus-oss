@@ -149,7 +149,7 @@ public class NexusViewSecurityResource
 
     private String createPrivilegeId( String repoId )
     {
-        return "repository-" + ( repoId.equals( "*" ) ? "all" : repoId );
+        return "repository-" + ( "*".equals (repoId ) ? "all" : repoId );
     }
 
     @AllowConcurrentEvents

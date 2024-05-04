@@ -157,7 +157,7 @@ public class RepositoryImpl implements Repository {
 			if (parser.getName().equals("bundle")) {
 				while (parser.nextTag() == XmlPullParser.START_TAG) {
 					String key = parser.getName();
-					if (key.equals("import-package")) {
+					if ("import-package".equals(key)) {
 						RequirementImpl requirement = new RequirementImpl(
 								"package");
 						
@@ -184,7 +184,7 @@ public class RepositoryImpl implements Repository {
 						
 						parser.nextTag();
 					}
-					else if (key.equals("export-package")) {
+					else if ("export-package".equals(key)) {
 						CapabilityImpl capability = new CapabilityImpl(
 								"package");
 						capability.addProperty("package", parser
@@ -200,21 +200,21 @@ public class RepositoryImpl implements Repository {
 					}
 					else {
 						String value = parser.nextText().trim();
-						if (key.equals("bundle-sourceurl"))
+						if ("bundle-sourceurl".equals(key))
 							resource.setSource(new URL(value));
-						else if (key.equals("bundle-docurl"))
+						else if ("bundle-docurl".equals(key))
 							resource.setDocumentation(new URL(value));
-						else if (key.equals("bundle-updatelocation"))
+						else if ("bundle-updatelocation".equals(key))
 							resource.setURL(new URL(value));
-						else if (key.equals("bundle-description"))
+						else if ("bundle-description".equals(key))
 							resource.setDescription(value);
-						else if (key.equals("bundle-category"))
+						else if ("bundle-category".equals(key))
 							resource.addCategory(value);
-						else if (key.equals("bundle-name")) {
+						else if ("bundle-name".equals(key)) {
 							resource.setName(value);
 							resource.setPresentationName(value);
 						}
-						else if (key.equals("bundle-version"))
+						else if ("bundle-version".equals(key))
 							resource.setVersion(new VersionRange(value));
 						else {
 							resource.put(key, value);
@@ -228,16 +228,16 @@ public class RepositoryImpl implements Repository {
 				parser.require(XmlPullParser.START_TAG, null, "repository");
 				while (parser.nextTag() == XmlPullParser.START_TAG) {
 					String tag = parser.getName();
-					if (tag.equals("name")) {
+					if ("name".equals(tag)) {
 						String name = parser.nextText();
 						if (this.name == null)
 							this.name = name.trim();
 					}
-					else if (tag.equals("url"))
+					else if ("url".equals(tag))
 						parser.nextText().trim();
-					else if (tag.equals("date"))
+					else if ("date".equals(tag))
 						parser.nextText().trim();
-					else if (tag.equals("extern-repositories")) {
+					else if ("extern-repositories".equals(tag)) {
 						parser.require(XmlPullParser.START_TAG, null,
 								"extern-repositories");
 						while (parser.nextTag() == XmlPullParser.START_TAG) {
@@ -313,7 +313,7 @@ public class RepositoryImpl implements Repository {
 					ZipInputStream zin = new ZipInputStream( url.openStream() );
 					ZipEntry entry = zin.getNextEntry();
 					while ( entry != null ) {
-						if ( entry.getName().equals("repository.xml")) {
+						if ( "repository.xml".equals(entry.getName())) {
 							in = zin;
 							break;
 						}

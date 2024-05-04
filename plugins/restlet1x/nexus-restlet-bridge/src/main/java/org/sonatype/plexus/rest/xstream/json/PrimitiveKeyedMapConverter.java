@@ -45,7 +45,7 @@ public class PrimitiveKeyedMapConverter
     public boolean canConvert( Class type )
     {
         return type.equals( HashMap.class ) || type.equals( Hashtable.class )
-            || type.getName().equals( "java.util.LinkedHashMap" ) || type.getName().equals( "sun.font.AttributeMap" );
+            || "java.util.LinkedHashMap".equals (type.getName() ) || "sun.font.AttributeMap".equals (type.getName() );
     }
 
     public void marshal( Object source, HierarchicalStreamWriter writer, MarshallingContext context )

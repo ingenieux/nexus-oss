@@ -120,7 +120,7 @@ public class SetProxyPropertiesInspector
                                 final String username, final String password, final Set<String> nonProxyHosts,
                                 final Properties properties, final String prefix )
     {
-        if ( !proxiesEnabled || hostname == null || hostname.equals( "" ) )
+        if ( !proxiesEnabled || hostname == null || "".equals (hostname ) )
         {
             properties.remove( prefix + "proxySet" );
             properties.remove( prefix + "proxyHost" );

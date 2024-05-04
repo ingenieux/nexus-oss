@@ -459,11 +459,11 @@ public class BundleInfo {
 			for (Iterator i = attributes.keySet().iterator(); i.hasNext();) {
 				String attribute = (String) i.next();
 				String value = (String) attributes.get(attribute);
-				if (attribute.equalsIgnoreCase("specification-version")
-						|| attribute.equalsIgnoreCase("version"))
+				if ("specification-version".equalsIgnoreCase(attribute)
+						|| "version".equalsIgnoreCase(attribute))
 					continue;
-				else if (attribute.equalsIgnoreCase("resolution:")) {
-					req.setOptional(value.equalsIgnoreCase("optional"));
+				else if ("resolution:".equalsIgnoreCase(attribute)) {
+					req.setOptional("optional".equalsIgnoreCase(value));
 				}
 				if (attribute.endsWith(":")) {
 					// Ignore
@@ -529,8 +529,8 @@ public class BundleInfo {
 		if (attributes != null)
 			for (Iterator at = attributes.keySet().iterator(); at.hasNext();) {
 				String key = (String) at.next();
-				if (key.equalsIgnoreCase("specification-version")
-						|| key.equalsIgnoreCase("version"))
+				if ("specification-version".equalsIgnoreCase(key)
+						|| "version".equalsIgnoreCase(key))
 					continue;
 				else {
 					Object value = attributes.get(key);

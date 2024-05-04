@@ -75,7 +75,7 @@ public class HtmlRemoteRepositoryParser
         {
             remotePath += "/";
         }
-        if ( remotePath.equals( "/" ) )
+        if ( "/".equals (remotePath ) )
         {
             remotePath = "";
         }

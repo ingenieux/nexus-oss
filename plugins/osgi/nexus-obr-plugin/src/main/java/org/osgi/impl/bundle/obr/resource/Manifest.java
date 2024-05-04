@@ -43,7 +43,7 @@ public class Manifest extends Hashtable {
 
 	public Object put(Object header, Object value) {
 		if (containsKey(header)) {
-			if (!((String) header).equalsIgnoreCase("comment"))
+			if (!"comment".equalsIgnoreCase(((String) header)))
 				duplicates.add(header + ":" + value);
 		}
 		return super.put(header, value);
@@ -99,10 +99,10 @@ public class Manifest extends Hashtable {
 			else
 				error("No value for manifest header " + header);
 			if (section == 0) {
-				if (header.equals("bundle-symbolicname")) {
+				if ("bundle-symbolicname".equals(header)) {
 					bsn = (ManifestEntry) getEntries(value).get(0);
 				}
-				if (header.equals("bundle-version")) {
+				if ("bundle-version".equals(header)) {
 					try {
 						version = new VersionRange(value.trim());
 					}
@@ -114,21 +114,21 @@ public class Manifest extends Hashtable {
 */
 					}
 				}
-				if (header.equals("fragment-host"))
+				if ("fragment-host".equals(header))
 					host = (ManifestEntry) getEntries(value).get(0);
-				if (header.equals("require-bundle"))
+				if ("require-bundle".equals(header))
 					require = getEntries(value);
-				if (header.equals("import-package"))
+				if ("import-package".equals(header))
 					imports = getEntries(value);
-				else if (header.equals("export-package"))
+				else if ("export-package".equals(header))
 					exports = getEntries(value);
-				else if (header.equals("bundle-activator"))
+				else if ("bundle-activator".equals(header))
 					activator = value.trim();
-				else if (header.equals("bundle-updatelocation"))
+				else if ("bundle-updatelocation".equals(header))
 					location = value.trim();
-				else if (header.equals("bundle-classpath"))
+				else if ("bundle-classpath".equals(header))
 					classpath = getClasspath(value);
-				else if (header.equals("bundle-nativecode"))
+				else if ("bundle-nativecode".equals(header))
 					_native = getNative(value);
 				put(header, value);
 			}

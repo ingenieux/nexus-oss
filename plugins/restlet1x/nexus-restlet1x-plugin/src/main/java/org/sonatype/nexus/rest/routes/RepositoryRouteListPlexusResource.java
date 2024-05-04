@@ -104,7 +104,7 @@ public class RepositoryRouteListPlexusResource
         {
             resource = new RepositoryRouteListResource();
 
-            if ( !item.getGroupId().equals( "*" ) )
+            if ( !"*".equals (item.getGroupId() ) )
             {
                 // XXX: added to check access to group
                 try

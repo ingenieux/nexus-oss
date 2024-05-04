@@ -317,7 +317,7 @@ abstract public class AbstractMetadataHelper
                     ZipEntry entry;
                     while ( ( entry = zip.getNextEntry() ) != null )
                     {
-                        if ( !entry.isDirectory() && entry.getName().equals( "META-INF/maven/plugin.xml" ) )
+                        if ( !entry.isDirectory() && "META-INF/maven/plugin.xml".equals (entry.getName() ) )
                         {
                             PlexusConfiguration plexusConfig =
                                 new XmlPlexusConfiguration( Xpp3DomBuilder.build( new InputStreamReader( zip ) ) );

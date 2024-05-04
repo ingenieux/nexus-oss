@@ -62,7 +62,7 @@ public class DefaultTargetRegistryEventInspector
                     // create default target for each content class that doesn't already exist
                     if ( target.getContentClass().equals( contentClasses.get( key ) )
                         && target.getPatternTexts().size() == 1
-                        && target.getPatternTexts().iterator().next().equals( ".*" ) )
+                        && ".*".equals (target.getPatternTexts().iterator().next() ) )
                     {
                         found = true;
                         break;

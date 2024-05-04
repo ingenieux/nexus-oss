@@ -166,7 +166,7 @@ public class MavenRepositoryReader
         logger.debug( "indata={}", indata.toString() );
         String key = extracktKey( indata );
         String newUrl = "";
-        if ( !key.equals( "" ) )
+        if ( !"".equals (key ) )
         {
             newUrl = findRootUrl( indata );
             newUrl += "?prefix=" + key;

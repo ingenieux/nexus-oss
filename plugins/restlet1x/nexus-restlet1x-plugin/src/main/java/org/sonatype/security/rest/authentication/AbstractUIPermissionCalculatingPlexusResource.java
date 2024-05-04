@@ -116,7 +116,7 @@ public abstract class AbstractUIPermissionCalculatingPlexusResource
 
         for ( Privilege priv : getSecuritySystem().listPrivileges() )
         {
-            if ( priv.getType().equals( "method" ) )
+            if ( "method".equals (priv.getType() ) )
             {
                 String permission = priv.getPrivilegeProperty( "permission" );
                 privilegeMap.put( permission, NONE );

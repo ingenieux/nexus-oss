@@ -67,11 +67,11 @@ public class ConfigFilesBundleAssembler
             {
                 return !pathname.getName().endsWith( ".bak" )
                     // following files are written with the current in-memory model
-                    && !pathname.getName().equals( "nexus.xml" )
-                    && !pathname.getName().equals( "security.xml" )
-                    && !pathname.getName().equals( "security-configuration.xml" )
+                    && !"nexus.xml".equals (pathname.getName() )
+                    && !"security.xml".equals (pathname.getName() )
+                    && !"security-configuration.xml".equals (pathname.getName() )
                     // ldap plugins add this config themselves
-                    && !pathname.getName().equals( "ldap.xml" );
+                    && !"ldap.xml".equals (pathname.getName() );
             }
         };
 

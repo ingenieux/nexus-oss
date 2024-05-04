@@ -164,7 +164,7 @@ public abstract class AbstractDocumentationNexusResourceBundle
             return null;
         }
 
-        assert baseClass.getProtocol().equals( "jar" );
+        assert "jar".equals (baseClass.getProtocol() );
 
         String jarPath = baseClass.getPath().substring( 5, baseClass.getPath().indexOf( "!" ) );
         return new ZipFile( URLDecoder.decode( jarPath, "UTF-8" ) );

@@ -105,7 +105,7 @@ public class LogHelperPlexusResource
         {
             level = "INFO";
         }
-        if ( level.equalsIgnoreCase( "trace" ) )
+        if ( "trace".equalsIgnoreCase (level ) )
         {
             if ( exception == null )
             {
@@ -116,7 +116,7 @@ public class LogHelperPlexusResource
                 logger.trace( message, exception );
             }
         }
-        else if ( level.equalsIgnoreCase( "debug" ) )
+        else if ( "debug".equalsIgnoreCase (level ) )
         {
             if ( exception == null )
             {
@@ -127,7 +127,7 @@ public class LogHelperPlexusResource
                 logger.debug( message, exception );
             }
         }
-        else if ( level.equalsIgnoreCase( "warn" ) )
+        else if ( "warn".equalsIgnoreCase (level ) )
         {
             if ( exception == null )
             {
@@ -138,7 +138,7 @@ public class LogHelperPlexusResource
                 logger.warn( message, exception );
             }
         }
-        else if ( level.equalsIgnoreCase( "error" ) )
+        else if ( "error".equalsIgnoreCase (level ) )
         {
             if ( exception == null )
             {

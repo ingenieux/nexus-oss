@@ -367,7 +367,7 @@ public class Tag {
 			if (o instanceof Tag) {
 				Tag child = (Tag) o;
 				if (child.getName().equals(elementName)
-						|| elementName.equals("*"))
+						|| "*".equals(elementName))
 					child.select(remainder, results, mapping);
 			}
 		}
@@ -378,7 +378,7 @@ public class Tag {
 		String sn = null;
 		String tn = null;
 
-		if (search.equals("*"))
+		if ("*".equals(search))
 			return true;
 
 		int s = search.indexOf(':');
