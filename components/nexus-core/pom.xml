@@ -335,6 +335,10 @@
       <artifactId>sisu-pr-testutil</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.github.pixee</groupId>
+      <artifactId>java-security-toolkit-xstream</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
