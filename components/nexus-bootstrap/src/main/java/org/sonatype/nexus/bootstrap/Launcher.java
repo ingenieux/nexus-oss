@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.bootstrap;
 
+import java.nio.file.Files;
 import org.eclipse.jetty.util.resource.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -248,7 +249,7 @@ public class Launcher
         }
 
         // Ensure we can actually create a new tmp file
-        File file = File.createTempFile("nexus-launcher", ".tmp");
+        File file = Files.createTempFile("nexus-launcher", ".tmp").toFile();
         file.createNewFile();
         file.delete();
 

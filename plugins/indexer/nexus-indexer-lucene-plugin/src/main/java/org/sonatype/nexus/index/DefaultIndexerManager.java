@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -2576,7 +2577,7 @@ public class DefaultIndexerManager
     {
         String indexId = repository.getId() + "-tmp-ctx";
 
-        File location = File.createTempFile( indexId, null, getTempDirectory() );
+        File location = Files.createTempFile(getTempDirectory().toPath(), indexId, null).toFile();
 
         if ( !location.delete() || !location.mkdir() )
         {
