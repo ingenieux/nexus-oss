@@ -12,6 +12,8 @@
  */
 package org.sonatype.sisu.jetty.custom;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.net.URL;
 
@@ -68,7 +70,7 @@ public class RedirectToHttpsRule
                 return target;
             }
 
-            URL url = new URL( requestURL.toString() );
+            URL url = Urls.create(requestURL.toString(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
             StringBuilder result = new StringBuilder();
             result.append( "https://" ).append( url.getHost() );

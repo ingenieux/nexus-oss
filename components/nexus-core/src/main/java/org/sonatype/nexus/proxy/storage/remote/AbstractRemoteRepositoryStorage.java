@@ -13,6 +13,8 @@
 package org.sonatype.nexus.proxy.storage.remote;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -99,7 +101,7 @@ public abstract class AbstractRemoteRepositoryStorage
 
         try
         {
-            return new URL( urlStr.toString() );
+            return Urls.create(urlStr.toString(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         }
         catch ( MalformedURLException e )
         {

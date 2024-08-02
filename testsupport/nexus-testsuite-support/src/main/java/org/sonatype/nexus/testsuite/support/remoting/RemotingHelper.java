@@ -13,6 +13,8 @@
 package org.sonatype.nexus.testsuite.support.remoting;
 
 import com.google.common.base.Throwables;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.sonatype.nexus.groovyremote.client.GroovyRemoteClient;
 import org.sonatype.nexus.groovyremote.client.GroovyRemoteClient.Builder;
 import org.sonatype.sisu.litmus.testsupport.TestUtil;
@@ -40,7 +42,7 @@ public class RemotingHelper
 
     public RemotingHelper(final int port) {
         try {
-            this.url = new URL("http://localhost:" + port);
+            this.url = Urls.create("http://localhost:" + port, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         }
         catch (MalformedURLException e) {
             throw Throwables.propagate(e);
