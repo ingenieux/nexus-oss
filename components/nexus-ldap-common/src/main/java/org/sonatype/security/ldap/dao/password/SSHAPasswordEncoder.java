@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Random;
 
 import org.apache.shiro.codec.Base64;
@@ -30,7 +31,7 @@ public class SSHAPasswordEncoder
 {
     private static final String SSHA_PREFIX = "{SSHA}";
 
-    private Random random = new Random();
+    private Random random = new SecureRandom();
 
     public String getMethod()
     {
