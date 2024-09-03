@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.configuration.application.upgrade;
 
+import io.github.pixee.security.xstream.HardeningConverter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -113,7 +114,8 @@ public class Upgrade103to104
         {
             // a snippet from old TaskConnfigManager
             XStream xstream = new XStream( new DomDriver() );
-            
+            xstream.registerConverter(new HardeningConverter());
+
             // alias the versioned class (they are frozen to 1.0.3 only!)
             xstream.alias( "org.sonatype.nexus.configuration.model.CTaskConfiguration", CTaskConfiguration.class );
             xstream.alias(

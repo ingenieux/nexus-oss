@@ -29,6 +29,7 @@
 
   <properties>
     <restlet.version>1.1.6-SONATYPE-5348-V8</restlet.version>
+    <versions.java-security-toolkit-xstream>1.0.2</versions.java-security-toolkit-xstream>
   </properties>
 
   <modules>
@@ -164,7 +165,11 @@
           </exclusion>
         </exclusions>
       </dependency>
-
+      <dependency>
+        <groupId>io.github.pixee</groupId>
+        <artifactId>java-security-toolkit-xstream</artifactId>
+        <version>${versions.java-security-toolkit-xstream}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

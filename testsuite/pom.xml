@@ -34,6 +34,7 @@
     -->
     <testsuite.basedir>${project.basedir}</testsuite.basedir>
     <autoshard.outputDir>${settings.localRepository}/autoshard/${project.groupId}/${project.artifactId}</autoshard.outputDir>
+    <versions.java-security-toolkit-xstream>1.0.2</versions.java-security-toolkit-xstream>
   </properties>
 
   <modules>
@@ -64,7 +65,11 @@
         <version>2.6.0-SNAPSHOT</version>
         <scope>import</scope>
       </dependency>
-
+      <dependency>
+        <groupId>io.github.pixee</groupId>
+        <artifactId>java-security-toolkit-xstream</artifactId>
+        <version>${versions.java-security-toolkit-xstream}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

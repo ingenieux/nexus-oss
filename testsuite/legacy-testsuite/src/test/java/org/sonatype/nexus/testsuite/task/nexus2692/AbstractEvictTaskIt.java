@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.testsuite.task.nexus2692;
 
+import io.github.pixee.security.xstream.HardeningConverter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -95,6 +96,7 @@ public class AbstractEvictTaskIt
         FileOutputStream fos = null;
 
         XStream xstream = new XStream();
+        xstream.registerConverter(new HardeningConverter());
         xstream.alias( "file", DefaultStorageFileItem.class );
         xstream.alias( "collection", DefaultStorageCollectionItem.class );
         xstream.alias( "link", DefaultStorageLinkItem.class );
