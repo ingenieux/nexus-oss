@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.bootstrap.monitor;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -98,7 +99,7 @@ public class CommandMonitorThread
                 log.debug( "Accepted client: {}", client );
 
                 BufferedReader reader = new BufferedReader( new InputStreamReader( client.getInputStream() ) );
-                String commandId = reader.readLine();
+                String commandId = BoundedLineReader.readLine(reader, 5_000_000);
                 log.debug( "Read command: {}", commandId );
                 client.close();
 
