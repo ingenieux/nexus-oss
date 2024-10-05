@@ -20,6 +20,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -721,7 +722,7 @@ public class AbstractEnvironmentMojo
 
             if ( "properties".equals( type ) )
             {
-                File tempFile = File.createTempFile( name, extension );
+                File tempFile = Files.createTempFile(name, extension).toFile();
                 mavenFileFilter.copyFile( extraContentFile, tempFile, true, project, null, true, "UTF-8", session );
 
                 originalReader = new FileInputStream( originalFile );
@@ -775,7 +776,7 @@ public class AbstractEnvironmentMojo
             destinationFile.getParentFile().mkdirs();
             destinationFile.createNewFile();
 
-            File tempFile = File.createTempFile( name, extension );
+            File tempFile = Files.createTempFile(name, extension).toFile();
             FileUtils.copyStreamToFile( new RawInputStreamFacade( getClass().getResourceAsStream( sourceUrl ) ),
                 tempFile );
             mavenFileFilter.copyFile( tempFile, destinationFile, true, project, null, true, "UTF-8", session );
