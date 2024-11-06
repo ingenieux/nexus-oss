@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.plugin.nxcm2124;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.sonatype.nexus.test.utils.StatusMatchers.isSuccess;
@@ -58,7 +60,7 @@ public class NXCM2124CheckConsoleDocumentationIT
 
         try
         {
-            r = RequestFacade.sendMessage( new URL( url ), Method.GET, null );
+            r = RequestFacade.sendMessage( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
             Status status = r.getStatus();
             assertThat( status, isSuccess() );
         }

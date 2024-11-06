@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.task.nexus977tasks;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.Matchers.containsString;
 
 import java.io.File;
@@ -68,7 +70,7 @@ public class Nexus977GroupOfGroupsSnapshotRemoverTaskTaskIT
         throws Exception
     {
         String path = "nexus977tasks/project/1.0-SNAPSHOT/project-1.0-20100520.154534-88.jar";
-        downloadFile( new URL( AbstractNexusIntegrationTest.nexusBaseUrl + REPOSITORY_RELATIVE_URL + "g4/" + path ),
+        downloadFile( Urls.create(AbstractNexusIntegrationTest.nexusBaseUrl + REPOSITORY_RELATIVE_URL + "g4/" + path, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nexus977tasks/project-1.0-20100520.154534-88.jar" );
 
         ScheduledServicePropertyResource keepSnapshotsProp = new ScheduledServicePropertyResource();
@@ -88,7 +90,7 @@ public class Nexus977GroupOfGroupsSnapshotRemoverTaskTaskIT
         try
         {
             downloadFile(
-                new URL( AbstractNexusIntegrationTest.nexusBaseUrl + REPOSITORY_RELATIVE_URL + "g4/" + path ),
+                Urls.create(AbstractNexusIntegrationTest.nexusBaseUrl + REPOSITORY_RELATIVE_URL + "g4/" + path, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
                 "target/downloads/nexus977tasks/project-1.0-20100520.154534-88-2.jar" );
             Assert.fail( "snapshot removal should have deleted this" );
         }

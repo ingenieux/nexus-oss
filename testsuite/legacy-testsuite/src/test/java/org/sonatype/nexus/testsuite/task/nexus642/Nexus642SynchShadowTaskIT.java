@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.task.nexus642;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.net.URL;
 
@@ -69,8 +71,8 @@ public class Nexus642SynchShadowTaskIT
         // download the file using the shadow repo
         File actualFile =
             this.downloadFile(
-                new URL( this.getBaseNexusUrl() + "content/repositories/" + shadowRepoId + "/" + this.getTestId()
-                    + "/jars/artifact-5.4.3.jar" ), "target/downloads/nexus642.jar" );
+                Urls.create(this.getBaseNexusUrl() + "content/repositories/" + shadowRepoId + "/" + this.getTestId()
+                    + "/jars/artifact-5.4.3.jar", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), "target/downloads/nexus642.jar" );
         File expectedFile = this.getTestResourceAsFile( "projects/artifact/artifact.jar" );
         Assert.assertTrue( FileTestingUtils.compareFileSHA1s( expectedFile, actualFile ) );
 

@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.task.nexus1022;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.net.URL;
 
@@ -55,16 +57,16 @@ public class Nexus1022RebuildRepositoryMavenMetadataTaskIT
 
         // just downloading it into dummy, since we are just checking is download possible
         // if not, downloadFile() will fail anyway. The content is not we are interested in.
-        downloadFile( new URL( nexusBaseUrl + "content/repositories/nexus-test-harness-repo/"
-                                   + "nexus1022/foo/bar/plugins/maven-metadata.xml" ), dummyFile );
+        downloadFile( Urls.create(nexusBaseUrl + "content/repositories/nexus-test-harness-repo/"
+                                   + "nexus1022/foo/bar/plugins/maven-metadata.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), dummyFile );
         downloadFile(
-            new URL( nexusBaseUrl + "content/groups/public/" + "nexus1022/foo/bar/plugins/maven-metadata.xml" ),
+            Urls.create(nexusBaseUrl + "content/groups/public/" + "nexus1022/foo/bar/plugins/maven-metadata.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             dummyFile );
 
-        downloadFile( new URL( nexusBaseUrl + "content/repositories/nexus-test-harness-repo/"
-                                   + "nexus1022/foo/bar/plugins/maven-metadata.xml" + ".sha1" ), dummyFile );
-        downloadFile( new URL( nexusBaseUrl + "content/groups/public/" + "nexus1022/foo/bar/plugins/maven-metadata.xml"
-                                   + ".sha1" ), dummyFile );
+        downloadFile( Urls.create(nexusBaseUrl + "content/repositories/nexus-test-harness-repo/"
+                                   + "nexus1022/foo/bar/plugins/maven-metadata.xml" + ".sha1", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), dummyFile );
+        downloadFile( Urls.create(nexusBaseUrl + "content/groups/public/" + "nexus1022/foo/bar/plugins/maven-metadata.xml"
+                                   + ".sha1", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), dummyFile );
     }
 
 }

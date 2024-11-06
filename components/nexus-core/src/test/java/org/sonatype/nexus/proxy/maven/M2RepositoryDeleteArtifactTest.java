@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.proxy.maven;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.sonatype.sisu.litmus.testsupport.hamcrest.FileMatchers.contains;
@@ -47,8 +49,8 @@ public class M2RepositoryDeleteArtifactTest
         releases.recreateMavenMetadata( new ResourceStoreRequest( "/" ) );
         snapshots.recreateMavenMetadata( new ResourceStoreRequest( "/" ) );
 
-        final File releasesRoot = new File( new URL( releases.getLocalUrl() ).toURI() );
-        final File snapshotsRoot = new File( new URL( snapshots.getLocalUrl() ).toURI() );
+        final File releasesRoot = new File( Urls.create(releases.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toURI() );
+        final File snapshotsRoot = new File( Urls.create(snapshots.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toURI() );
 
         assertThat(
             new File( releasesRoot, "org/sonatype/nexus/nexus-indexer/maven-metadata.xml" ),

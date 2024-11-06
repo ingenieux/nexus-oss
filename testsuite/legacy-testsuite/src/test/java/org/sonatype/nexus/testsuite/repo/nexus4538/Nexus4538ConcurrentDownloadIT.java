@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.repo.nexus4538;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
@@ -61,7 +63,7 @@ public class Nexus4538ConcurrentDownloadIT
         String baseUrl =
             AbstractNexusIntegrationTest.nexusBaseUrl + REPOSITORY_RELATIVE_URL + REPO_TEST_HARNESS_REPO + "/";
         String path = getRelitiveArtifactPath( gav );
-        final URL url = new URL( baseUrl + path );
+        final URL url = Urls.create(baseUrl + path, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
         // same trick as with the throttling tests to counter load spikes on CI:
         // get an already throttled baseline and test that it does not get worse.

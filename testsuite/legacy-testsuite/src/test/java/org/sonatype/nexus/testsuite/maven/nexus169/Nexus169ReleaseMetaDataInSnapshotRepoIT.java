@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.maven.nexus169;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -96,11 +98,11 @@ public class Nexus169ReleaseMetaDataInSnapshotRepoIT
         // been stripped out.
 
         URL snapshotRepoMetaDataURL =
-            new URL( this.getNexusTestRepoUrl() + this.getTestId().replace( '.', '/' )
-                + "/simple-artifact/maven-metadata.xml" );
+            Urls.create(this.getNexusTestRepoUrl() + this.getTestId().replace( '.', '/' )
+                + "/simple-artifact/maven-metadata.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         URL groupMetaDataURL =
-            new URL( this.getBaseNexusUrl() + GROUP_REPOSITORY_RELATIVE_URL + TEST_GROUP + "/"
-                + this.getTestId().replace( '.', '/' ) + "/simple-artifact/maven-metadata.xml" );
+            Urls.create(this.getBaseNexusUrl() + GROUP_REPOSITORY_RELATIVE_URL + TEST_GROUP + "/"
+                + this.getTestId().replace( '.', '/' ) + "/simple-artifact/maven-metadata.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
         log.debug( "snapshotRepoMetaDataURL: " + snapshotRepoMetaDataURL );
         log.debug( "groupMetaDataURL: " + groupMetaDataURL );

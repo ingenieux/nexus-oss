@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.nxcm3916;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.sonatype.sisu.litmus.testsupport.hamcrest.FileMatchers.exists;
@@ -62,7 +64,7 @@ public class NXCM3916SecureWebProxiedP2IT
         // ensuring the proxy is working!!!
         assertThat(
             downloadFile(
-                new URL( baseProxyURL + "nxcm3916/artifacts.xml" ),
+                Urls.create(baseProxyURL + "nxcm3916/artifacts.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
                 "./target/downloads/nxcm3916/artifacts.xml.temp"
             ),
             exists()

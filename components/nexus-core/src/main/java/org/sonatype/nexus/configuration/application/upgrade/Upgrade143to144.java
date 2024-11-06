@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.configuration.application.upgrade;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -199,7 +201,7 @@ public class Upgrade143to144
 
             try
             {
-                url = new URL( urlStr );
+                url = Urls.create(urlStr, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             }
             catch ( MalformedURLException e )
             {

@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.proxy.storage.remote.httpclient;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -610,11 +612,11 @@ public class HttpClientRemoteStorage
             {
                 if ( StringUtils.isBlank( url.getQuery() ) )
                 {
-                    return new URL( url.toExternalForm() + "?" + queryString );
+                    return Urls.create(url.toExternalForm() + "?" + queryString, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                 }
                 else
                 {
-                    return new URL( url.toExternalForm() + "&" + queryString );
+                    return Urls.create(url.toExternalForm() + "&" + queryString, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                 }
             }
             catch ( MalformedURLException e )

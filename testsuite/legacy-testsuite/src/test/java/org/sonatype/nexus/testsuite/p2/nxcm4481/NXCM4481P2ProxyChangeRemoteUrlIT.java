@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.nxcm4481;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.sonatype.sisu.litmus.testsupport.hamcrest.FileMatchers.contains;
@@ -46,7 +48,7 @@ public class NXCM4481P2ProxyChangeRemoteUrlIT
         throws Exception
     {
         File artifactsXmlFile = downloadFile(
-            new URL( getNexusTestRepoUrl() + "artifacts.xml" ),
+            Urls.create(getNexusTestRepoUrl() + "artifacts.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nxcm4481/artifactsBeforeChange.xml"
         );
         assertThat( artifactsXmlFile, contains( "id=\"com.sonatype.nexus.p2.its.bundle\"" ) );
@@ -55,7 +57,7 @@ public class NXCM4481P2ProxyChangeRemoteUrlIT
         try
         {
             downloadFile(
-                new URL( getNexusTestRepoUrl() + "plugins/com.sonatype.nexus.p2.its.bundle3_1.0.0.jar" ),
+                Urls.create(getNexusTestRepoUrl() + "plugins/com.sonatype.nexus.p2.its.bundle3_1.0.0.jar", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
                 "target/downloads/nxcm2076/com.sonatype.nexus.p2.its.bundle3_1.0.0.jar"
             );
             Assert.fail(
@@ -80,14 +82,14 @@ public class NXCM4481P2ProxyChangeRemoteUrlIT
         TaskScheduleUtil.waitForAllTasksToStop();
 
         artifactsXmlFile = downloadFile(
-            new URL( getNexusTestRepoUrl() + "artifacts.xml" ),
+            Urls.create(getNexusTestRepoUrl() + "artifacts.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nxcm4481/artifactsAfterChange.xml"
         );
         assertThat( artifactsXmlFile, not( contains( "id=\"com.sonatype.nexus.p2.its.bundle\"" ) ) );
         assertThat( artifactsXmlFile, contains( "id=\"com.sonatype.nexus.p2.its.bundle3\"" ) );
 
         downloadFile(
-            new URL( getNexusTestRepoUrl() + "plugins/com.sonatype.nexus.p2.its.bundle3_1.0.0.jar" ),
+            Urls.create(getNexusTestRepoUrl() + "plugins/com.sonatype.nexus.p2.its.bundle3_1.0.0.jar", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nxcm4481/com.sonatype.nexus.p2.its.bundle3_1.0.0.jar"
         );
     }

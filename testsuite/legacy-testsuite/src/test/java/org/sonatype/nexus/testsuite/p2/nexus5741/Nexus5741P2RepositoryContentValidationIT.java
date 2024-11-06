@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.nexus5741;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
@@ -54,7 +56,7 @@ public class Nexus5741P2RepositoryContentValidationIT
         try
         {
             downloadFile(
-                new URL( getNexusTestRepoUrl() + "org.eclipse.mylyn.commons.core_3.8.4.v20130429-0100.jar" ),
+                Urls.create(getNexusTestRepoUrl() + "org.eclipse.mylyn.commons.core_3.8.4.v20130429-0100.jar", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
                 new File( "target/downloads/nexus5741/org.eclipse.mylyn.commons.core_3.8.4.v20130429-0100.jar" )
                     .getCanonicalPath()
             );

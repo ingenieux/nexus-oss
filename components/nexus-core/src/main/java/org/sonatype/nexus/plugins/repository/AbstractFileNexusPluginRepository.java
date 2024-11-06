@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.plugins.repository;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -215,7 +217,7 @@ public abstract class AbstractFileNexusPluginRepository
     {
         try
         {
-            return getPluginMetadata( new URL( "jar:" + file.toURI() + "!/" + PLUGIN_XML ) );
+            return getPluginMetadata( Urls.create("jar:" + file.toURI() + "!/" + PLUGIN_XML, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS) );
         }
         catch ( final IOException e )
         {

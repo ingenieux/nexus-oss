@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.p2r03;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.sonatype.sisu.litmus.testsupport.hamcrest.FileMatchers.readable;
@@ -51,7 +53,7 @@ public class P2R0304P2RepositoryRecreateIT
 
         // ensure link created
         final File file = downloadFile(
-            new URL( getNexusTestRepoUrl() + "/.meta/p2/plugins/org.ops4j.base.lang_1.2.3.jar" ),
+            Urls.create(getNexusTestRepoUrl() + "/.meta/p2/plugins/org.ops4j.base.lang_1.2.3.jar", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             new File(
                 "target/downloads/" + this.getClass().getSimpleName() + "/org.ops4j.base.lang_1.2.3.jar"
             ).getCanonicalPath()

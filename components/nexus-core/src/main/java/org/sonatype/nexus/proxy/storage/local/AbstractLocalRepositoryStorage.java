@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.proxy.storage.local;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -168,7 +170,7 @@ public abstract class AbstractLocalRepositoryStorage
         }
         try
         {
-            return new URL( urlStr.toString() );
+            return Urls.create(urlStr.toString(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         }
         catch ( MalformedURLException e )
         {

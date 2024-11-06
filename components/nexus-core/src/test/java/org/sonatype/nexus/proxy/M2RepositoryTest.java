@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.proxy;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
@@ -497,8 +499,8 @@ public class M2RepositoryTest
         M2Repository repository = (M2Repository) this.getRepositoryRegistry().getRepository( "inhouse" );
         File inhouseLocalStorageDir =
             new File(
-                new URL( ( (CRepositoryCoreConfiguration) repository.getCurrentCoreConfiguration() ).getConfiguration(
-                    false ).getLocalStorage().getUrl() ).getFile() );
+                Urls.create(( (CRepositoryCoreConfiguration) repository.getCurrentCoreConfiguration() ).getConfiguration(
+                    false ).getLocalStorage().getUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).getFile() );
 
         File artifactFile = new File( inhouseLocalStorageDir, itemPath );
         artifactFile.getParentFile().mkdirs();
@@ -734,8 +736,8 @@ public class M2RepositoryTest
         Assert.assertTrue( Maven2ContentClass.ID.equals( repository.getRepositoryContentClass().getId() ) );
         File repositoryLocalStorageDir =
             new File(
-                new URL( ( (CRepositoryCoreConfiguration) repository.getCurrentCoreConfiguration() ).getConfiguration(
-                    false ).getLocalStorage().getUrl() ).getFile() );
+                Urls.create(( (CRepositoryCoreConfiguration) repository.getCurrentCoreConfiguration() ).getConfiguration(
+                    false ).getLocalStorage().getUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).getFile() );
 
         // create a request and equip it as needed
         final ResourceStoreRequest request = new ResourceStoreRequest( path );

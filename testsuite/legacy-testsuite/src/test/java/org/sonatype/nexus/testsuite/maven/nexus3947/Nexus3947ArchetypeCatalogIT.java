@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.maven.nexus3947;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.URL;
 
 import org.apache.maven.archetype.catalog.ArchetypeCatalog;
@@ -42,7 +44,7 @@ public class Nexus3947ArchetypeCatalogIT
         String url = getRepositoryUrl( getTestRepositoryId() ) + relativePath;
 
         // request the catalog
-        response = RequestFacade.sendMessage( new URL( url ), Method.GET, null );
+        response = RequestFacade.sendMessage( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
 
         // read and check
         catalog = acr.read( response.getEntity().getReader() );
@@ -58,7 +60,7 @@ public class Nexus3947ArchetypeCatalogIT
         getEventInspectorsUtil().waitForCalmPeriod();
 
         // request the catalog
-        response = RequestFacade.sendMessage( new URL( url ), Method.GET, null );
+        response = RequestFacade.sendMessage( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
 
         // read and check
         catalog = acr.read( response.getEntity().getReader() );

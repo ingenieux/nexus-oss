@@ -13,6 +13,8 @@
 package org.sonatype.nexus.integrationtests;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -166,7 +168,7 @@ public class NexusRestClient
     {
         checkNotNull( serviceURIPart );
         final String serviceURI = testContext.getNexusUrl() + serviceURIPart;
-        return new URL( serviceURI );
+        return Urls.create(serviceURI, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
     }
 

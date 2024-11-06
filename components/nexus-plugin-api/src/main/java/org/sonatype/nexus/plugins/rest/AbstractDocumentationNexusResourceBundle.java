@@ -13,6 +13,8 @@
 package org.sonatype.nexus.plugins.rest;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -81,7 +83,7 @@ public abstract class AbstractDocumentationNexusResourceBundle
 
                     name = "/" + name;
 
-                    URL url = new URL( "jar:file:" + zip.getName() + "!" + name );
+                    URL url = Urls.create("jar:file:" + zip.getName() + "!" + name, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
                     // to lessen clash possibilities, this way only within single plugin may be clashes, but one
                     // plugin is usually developed by one team or one user so this is okay

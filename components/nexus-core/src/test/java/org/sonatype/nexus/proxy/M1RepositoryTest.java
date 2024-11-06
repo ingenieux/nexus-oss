@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.proxy;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -204,7 +206,7 @@ public class M1RepositoryTest
         String itemPath = "/spoof/poms/spoof-1.0.pom";
 
         M1Repository repository = (M1Repository) this.getRepositoryRegistry().getRepository( "inhouse" );
-        File inhouseLocalStorageDir = new File( new URL(((CRepositoryCoreConfiguration) repository.getCurrentCoreConfiguration()).getConfiguration( false).getLocalStorage().getUrl() ).getFile());
+        File inhouseLocalStorageDir = new File( Urls.create(((CRepositoryCoreConfiguration) repository.getCurrentCoreConfiguration()).getConfiguration( false).getLocalStorage().getUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).getFile());
 
         File artifactFile = new File( inhouseLocalStorageDir, itemPath );
         artifactFile.getParentFile().mkdirs();
