@@ -13,6 +13,7 @@
 package org.sonatype.nexus.proxy.maven.routing.internal;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import java.security.SecureRandom;
 
 import java.util.Map;
 import java.util.Random;
@@ -31,7 +32,7 @@ import org.sonatype.tests.http.server.api.Behaviour;
 public class GenerateRandomBehaviour
     implements Behaviour
 {
-    private final Random random = new Random();
+    private final Random random = new SecureRandom();
 
     private static final byte[] bytes = new byte[1024];
 

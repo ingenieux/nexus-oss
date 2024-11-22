@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class MultithreadTimelineIndexerIT
 {
     protected File indexDirectory;
 
-    protected static final Random rnd = new Random();
+    protected static final Random rnd = new SecureRandom();
 
     // number of deploy threads (and search threads) to launch
     protected static final int THREAD_COUNT = 10;

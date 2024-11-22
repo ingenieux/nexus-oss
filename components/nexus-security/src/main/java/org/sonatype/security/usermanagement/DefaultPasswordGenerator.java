@@ -12,6 +12,7 @@
  */
 package org.sonatype.security.usermanagement;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 import javax.enterprise.inject.Typed;
@@ -29,7 +30,7 @@ public class DefaultPasswordGenerator
 {
     private int getRandom( int min, int max )
     {
-        Random random = new Random();
+        Random random = new SecureRandom();
         int total = max - min + 1;
         int next = Math.abs( random.nextInt() % total );
 
