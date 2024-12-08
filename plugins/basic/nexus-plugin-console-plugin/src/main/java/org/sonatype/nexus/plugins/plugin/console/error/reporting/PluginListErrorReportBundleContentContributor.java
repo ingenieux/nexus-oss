@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.plugins.plugin.console.error.reporting;
 
+import io.github.pixee.security.xstream.HardeningConverter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -41,6 +42,7 @@ public class PluginListErrorReportBundleContentContributor
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
         XStream xs = new XStream();
+        xs.registerConverter(new HardeningConverter());
         xs.alias( "PluginInfo", PluginInfo.class );
         xs.toXML( l, bos );
 

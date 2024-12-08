@@ -176,6 +176,10 @@
       <artifactId>nexus-indexer-lucene-plugin</artifactId>
       <version>${nexus.version}</version>
     </dependency>
+    <dependency>
+      <groupId>io.github.pixee</groupId>
+      <artifactId>java-security-toolkit-xstream</artifactId>
+    </dependency>
   </dependencies>
 
 </project>
