@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.plugin.obr.test.metadata;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -40,11 +41,11 @@ public class ObrResourceReaderTest
         Resource r;
         while ( ( r = reader.readResource() ) != null )
         {
-            assertEquals( br.readLine(), r.toString() );
+            assertEquals( BoundedLineReader.readLine(br, 5_000_000), r.toString() );
             numBundles++;
         }
 
-        assertNull( br.readLine() );
+        assertNull( BoundedLineReader.readLine(br, 5_000_000) );
 
         assertEquals( 2710, numBundles );
 

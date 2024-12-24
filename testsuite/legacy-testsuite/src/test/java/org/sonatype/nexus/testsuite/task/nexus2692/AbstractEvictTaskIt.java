@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.testsuite.task.nexus2692;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -105,7 +106,7 @@ public class AbstractEvictTaskIt
         {
             reader = new BufferedReader( new FileReader( attributesInfo ) );
 
-            String line = reader.readLine();
+            String line = BoundedLineReader.readLine(reader, 5_000_000);
             while ( line != null )
             {
                 String[] parts = line.split( " " );
@@ -156,7 +157,7 @@ public class AbstractEvictTaskIt
                     IOUtil.close( fos );
                 }
 
-                line = reader.readLine();
+                line = BoundedLineReader.readLine(reader, 5_000_000);
             }
         }
         finally

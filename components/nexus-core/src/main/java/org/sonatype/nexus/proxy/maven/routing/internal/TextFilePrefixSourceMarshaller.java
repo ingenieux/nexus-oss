@@ -13,6 +13,7 @@
 package org.sonatype.nexus.proxy.maven.routing.internal;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import io.github.pixee.security.BoundedLineReader;
 import static org.sonatype.nexus.util.PathUtils.elementsOf;
 import static org.sonatype.nexus.util.PathUtils.pathFrom;
 
@@ -140,7 +141,7 @@ public class TextFilePrefixSourceMarshaller
         {
             final ArrayList<String> entries = new ArrayList<String>();
             reader = new BufferedReader( new InputStreamReader( file.getInputStream(), CHARSET ) );
-            String line = reader.readLine();
+            String line = BoundedLineReader.readLine(reader, 5_000_000);
 
             if ( UNSUPPORTED.equals( line ) )
             {
@@ -175,7 +176,7 @@ public class TextFilePrefixSourceMarshaller
                     // normalization
                     entries.add( pathFrom( elementsOf( line ) ) );
                 }
-                line = reader.readLine();
+                line = BoundedLineReader.readLine(reader, 5_000_000);
 
                 // dump big files
                 if ( entries.size() > prefixFileMaxEntryCount )
