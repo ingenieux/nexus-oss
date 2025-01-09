@@ -13,6 +13,7 @@
 package org.sonatype.nexus.proxy.storage.local.fs;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import java.nio.file.Files;
 import static org.sonatype.nexus.proxy.ItemNotFoundException.reasonFor;
 
 import java.io.EOFException;
@@ -397,7 +398,7 @@ public class DefaultFSPeer
             mkDirs( repository, repoTmpFolder );
 
             // NEXUS-4955 add APPENDIX to make sure prefix is bigger the 3 chars
-            return File.createTempFile( target.getName() + APPENDIX, HIDDEN_TARGET_SUFFIX, repoTmpFolder );
+            return Files.createTempFile(repoTmpFolder.toPath(), target.getName() + APPENDIX, HIDDEN_TARGET_SUFFIX).toFile();
         }
         catch ( IOException e )
         {
