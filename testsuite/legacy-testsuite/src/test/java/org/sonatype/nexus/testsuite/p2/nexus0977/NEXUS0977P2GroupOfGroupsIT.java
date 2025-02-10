@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.nexus0977;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.URL;
 
 import org.junit.Test;
@@ -31,7 +33,7 @@ public class NEXUS0977P2GroupOfGroupsIT
         throws Exception
     {
         downloadFile(
-            new URL( getRepositoryUrl( "nexus0977g1" ) + "/content.xml" ), "target/downloads/nexus0977/content.xml"
+            Urls.create(getRepositoryUrl( "nexus0977g1" ) + "/content.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), "target/downloads/nexus0977/content.xml"
         );
     }
 

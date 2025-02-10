@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.misc.nexus3860;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
@@ -309,7 +311,7 @@ public abstract class AbstractCargoIT
         BufferedReader bReader = null;
         try
         {
-            response = RequestFacade.sendMessage( new URL( logURI ), Method.GET, null );
+            response = RequestFacade.sendMessage( Urls.create(logURI, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
             assertThat( response, ResponseMatchers.isSuccessful() );
             InputStream stream = response.getEntity().getStream();
             if ( stream == null )

@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.nxcm1995;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -42,7 +44,7 @@ public class NXCM1995MetadataCacheIT
     {
         // check original content
         final File f1 = downloadFile(
-            new URL( getNexusTestRepoUrl() + "/content.xml" ),
+            Urls.create(getNexusTestRepoUrl() + "/content.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nxcm1995/1/content.xml"
         );
         assertThat( f1, exists() );
@@ -51,7 +53,7 @@ public class NXCM1995MetadataCacheIT
 
         // check original artifact
         final File a1 = downloadFile(
-            new URL( getNexusTestRepoUrl() + "/artifacts.xml" ),
+            Urls.create(getNexusTestRepoUrl() + "/artifacts.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nxcm1995/1/artifacts.xml"
         );
         assertThat( a1, exists() );
@@ -88,7 +90,7 @@ public class NXCM1995MetadataCacheIT
 
         // make sure nexus has the right content after metadata cache expires
         final File f2 = downloadFile(
-            new URL( getNexusTestRepoUrl() + "/content.xml" ),
+            Urls.create(getNexusTestRepoUrl() + "/content.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nxcm1995/2/content.xml"
         );
         assertThat( f2, exists() );
@@ -99,7 +101,7 @@ public class NXCM1995MetadataCacheIT
 
         // make sure nexus has the right content after metadata cache expires
         final File a2 = downloadFile(
-            new URL( getNexusTestRepoUrl() + "/artifacts.xml" ),
+            Urls.create(getNexusTestRepoUrl() + "/artifacts.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nxcm1995/2/artifacts.xml"
         );
         assertThat( a2, exists() );

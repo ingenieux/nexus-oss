@@ -12,6 +12,8 @@
  */
 package org.osgi.impl.bundle.obr.resource;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -201,11 +203,11 @@ public class RepositoryImpl implements Repository {
 					else {
 						String value = parser.nextText().trim();
 						if (key.equals("bundle-sourceurl"))
-							resource.setSource(new URL(value));
+							resource.setSource(Urls.create(value, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
 						else if (key.equals("bundle-docurl"))
-							resource.setDocumentation(new URL(value));
+							resource.setDocumentation(Urls.create(value, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
 						else if (key.equals("bundle-updatelocation"))
-							resource.setURL(new URL(value));
+							resource.setURL(Urls.create(value, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
 						else if (key.equals("bundle-description"))
 							resource.setDescription(value);
 						else if (key.equals("bundle-category"))
@@ -242,7 +244,7 @@ public class RepositoryImpl implements Repository {
 								"extern-repositories");
 						while (parser.nextTag() == XmlPullParser.START_TAG) {
 							if (parser.getName().equals("url"))
-								parseDocument(new URL(parser.nextText().trim()));
+								parseDocument(Urls.create(parser.nextText().trim(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
 							else
 								throw new IllegalArgumentException(
 										"Invalid tag in repository while parsing extern repositories: "
@@ -281,7 +283,7 @@ public class RepositoryImpl implements Repository {
 			parser.require(XmlPullParser.START_TAG, null, "referral");
 			// String depth = parser.getAttributeValue(null, "depth");
 			String path = parser.getAttributeValue(null, "url");
-			URL url = new URL(this.url, path);
+			URL url = Urls.create(this.url, path, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 			parseDocument(url);
 			parser.next();
 			parser.require(XmlPullParser.END_TAG, null, "referral");

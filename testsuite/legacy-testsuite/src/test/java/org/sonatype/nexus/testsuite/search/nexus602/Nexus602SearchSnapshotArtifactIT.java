@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.search.nexus602;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -158,7 +160,7 @@ public class Nexus602SearchSnapshotArtifactIT
             RequestFacade.releaseResponse( response );
 
             response =
-                RequestFacade.sendMessage( new URL( response.getLocationRef().toString() ), Method.GET, null,
+                RequestFacade.sendMessage( Urls.create(response.getLocationRef().toString(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null,
                                            isSuccessful() );
         }
         finally

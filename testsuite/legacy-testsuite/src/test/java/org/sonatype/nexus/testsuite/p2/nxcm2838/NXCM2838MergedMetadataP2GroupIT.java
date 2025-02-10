@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.nxcm2838;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -42,7 +44,7 @@ public class NXCM2838MergedMetadataP2GroupIT
         assertThat( artifactsXmlFile, not( exists() ) );
 
         downloadFile(
-            new URL( getGroupUrl( getTestRepositoryId() ) + "artifacts.xml" ),
+            Urls.create(getGroupUrl( getTestRepositoryId() ) + "artifacts.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             artifactsXmlFile.getAbsolutePath()
         );
         assertThat( artifactsXmlFile, exists() );

@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.proxy.maven.metadata;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
@@ -160,7 +162,7 @@ public class RecreateMavenMetadataWalkerIT
     protected File retrieveFile( Repository repo, String path )
         throws Exception
     {
-        File root = new File( new URL( repo.getLocalUrl() ).toURI() );
+        File root = new File( Urls.create(repo.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toURI() );
 
         File result = new File( root, path );
 

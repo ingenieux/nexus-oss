@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.nxcm3963;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -64,7 +66,7 @@ public class NXCM3963P2GroupLoadTestIT
                 try
                 {
                     downloadFile(
-                        new URL( getRepositoryUrl( getTestRepositoryId() ) + "content.xml" ),
+                        Urls.create(getRepositoryUrl( getTestRepositoryId() ) + "content.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
                         file.getAbsolutePath()
                     );
                 }

@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -103,7 +105,7 @@ public abstract class AbstractMavenRepoContentTests
         final File sourceSnapshotsRoot =
             new File( getBasedir(), "src/test/resources/reposes/snapshots" ).getAbsoluteFile();
 
-        final URL snapshotsRootUrl = new URL( snapshots.getLocalUrl() );
+        final URL snapshotsRootUrl = Urls.create(snapshots.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
         final File snapshotsRoot = new File( snapshotsRootUrl.toURI() ).getAbsoluteFile();
 
@@ -111,7 +113,7 @@ public abstract class AbstractMavenRepoContentTests
 
         final File sourceReleasesRoot = new File( getBasedir(), "src/test/resources/reposes/releases" );
 
-        final URL releaseRootUrl = new URL( releases.getLocalUrl() );
+        final URL releaseRootUrl = Urls.create(releases.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
         final File releasesRoot = new File( releaseRootUrl.toURI() );
 
@@ -119,7 +121,7 @@ public abstract class AbstractMavenRepoContentTests
 
         final File sourceApacheSnapshotsRoot = new File( getBasedir(), "src/test/resources/reposes/apache-snapshots" );
 
-        final URL apacheSnapshotsRootUrl = new URL( apacheSnapshots.getLocalUrl() );
+        final URL apacheSnapshotsRootUrl = Urls.create(apacheSnapshots.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
         final File apacheSnapshotsRoot = new File( apacheSnapshotsRootUrl.toURI() );
 
@@ -150,7 +152,7 @@ public abstract class AbstractMavenRepoContentTests
     protected File retrieveFile( MavenRepository repo, String path )
         throws Exception
     {
-        File root = new File( new URL( repo.getLocalUrl() ).toURI() );
+        File root = new File( Urls.create(repo.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toURI() );
 
         File result = new File( root, path );
 

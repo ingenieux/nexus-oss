@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.plugins.p2.repository;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -79,7 +81,7 @@ public class P2ProxyMirrorsTest
     private void copyFileToDotNexus( final String fileName, final String targetFileName )
         throws IOException
     {
-        final String localStorageDir = new URL( repository.getLocalUrl() ).getPath();
+        final String localStorageDir = Urls.create(repository.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).getPath();
 
         final String filePrefix = this.getClass().getName().replaceAll( "\\.", "/" ) + "-";
         final String resource = filePrefix + fileName;

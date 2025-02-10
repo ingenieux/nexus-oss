@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.obr.proxy;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -68,7 +70,7 @@ public class CacheableResource
 
             // construct a new URL using the bundle's identity, making sure we encode spaces
             final String id = URLEncoder.encode( r.getSymbolicName() + '-' + r.getVersion(), "UTF-8" );
-            url = new URL( "file:" + BUNDLES_PATH + id + ".jar" );
+            url = Urls.create("file:" + BUNDLES_PATH + id + ".jar", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         }
         catch ( final IOException e )
         {

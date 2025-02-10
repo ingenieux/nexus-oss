@@ -12,6 +12,8 @@
  */
 package org.osgi.impl.bundle.obr.resource;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
@@ -95,7 +97,7 @@ public class ResourceImpl implements Resource {
 		if (attributeValue == null)
 			return null;
 
-		return new URL(repository.getURL(), attributeValue);
+		return Urls.create(repository.getURL(), attributeValue, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 	}
 
 	public void addCategory(String category) {

@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.maven.tasks;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -73,7 +75,7 @@ public class DefaultSnapshotRemoverIT
 
         long tenDaysAgo = System.currentTimeMillis() - 10 * 86400000L;
 
-        final URL snapshotsRootUrl = new URL( snapshots.getLocalUrl() );
+        final URL snapshotsRootUrl = Urls.create(snapshots.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
         final File snapshotsRoot = new File( snapshotsRootUrl.toURI() ).getAbsoluteFile();
 
@@ -113,7 +115,7 @@ public class DefaultSnapshotRemoverIT
         // make the jar should be deleted, while the pom should be kept
         long threeDayAgo = System.currentTimeMillis() - 3 * 86400000L;
 
-        final URL snapshotsRootUrl = new URL( snapshots.getLocalUrl() );
+        final URL snapshotsRootUrl = Urls.create(snapshots.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
         final File snapshotsRoot = new File( snapshotsRootUrl.toURI() ).getAbsoluteFile();
 
@@ -356,7 +358,7 @@ public class DefaultSnapshotRemoverIT
         );
 
         final File released = new File(
-            new File( new URL( releases.getLocalUrl() ).toURI() ),
+            new File( Urls.create(releases.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toURI() ),
             "/org/sonatype/nexus/nexus-indexer/1.0-beta-4/nexus-indexer-1.0-beta-4.pom"
         );
 

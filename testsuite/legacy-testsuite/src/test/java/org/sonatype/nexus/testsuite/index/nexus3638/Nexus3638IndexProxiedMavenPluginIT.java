@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.index.nexus3638;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 
@@ -65,10 +67,9 @@ public class Nexus3638IndexProxiedMavenPluginIT
         final Gav gav = GavUtil.newGav( "org.apache.maven.plugins", "maven-invoker-plugin", "1.6-SNAPSHOT" );
 
         downloadFile(
-            new URL(
-                "http://localhost:"
+            Urls.create("http://localhost:"
                     + TestProperties.getInteger( "webproxy-server-port" )
-                    + "/nexus3638/org/apache/maven/plugins/maven-invoker-plugin/1.6-SNAPSHOT/maven-invoker-plugin-1.6-20100922.124315-3.jar" ),
+                    + "/nexus3638/org/apache/maven/plugins/maven-invoker-plugin/1.6-SNAPSHOT/maven-invoker-plugin-1.6-20100922.124315-3.jar", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nexus3638" );
 
         Thread[] threads = new Thread[10];

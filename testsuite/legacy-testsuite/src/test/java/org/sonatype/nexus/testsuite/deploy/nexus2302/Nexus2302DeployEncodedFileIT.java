@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.deploy.nexus2302;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -110,49 +112,49 @@ public class Nexus2302DeployEncodedFileIT
             query = "";
         }
 
-        URL url = new URL( nexusBaseUrl + "content/repositories/" + REPO_TEST_HARNESS_REPO + "/" );
+        URL url = Urls.create(nexusBaseUrl + "content/repositories/" + REPO_TEST_HARNESS_REPO + "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         String content = IOUtil.toString( url.openStream() );
         assertThat( content, containsString( gav.getGroupId() ) );
 
-        url = new URL( url.toString() + gav.getGroupId() + "/" );
+        url = Urls.create(url.toString() + gav.getGroupId() + "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         assertThat( content, containsString( url.toString() ) );
         content = IOUtil.toString( url.openStream() );
         assertThat( content, containsString( gav.getArtifactId() ) );
 
-        url = new URL( url.toString() + gav.getArtifactId() + "/" );
+        url = Urls.create(url.toString() + gav.getArtifactId() + "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         assertThat( content, containsString( url.toString() ) );
         content = IOUtil.toString( url.openStream() );
         assertThat( content, containsString( gav.getVersion() ) );
 
-        url = new URL( url.toString() + gav.getVersion() + "/" );
+        url = Urls.create(url.toString() + gav.getVersion() + "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         assertThat( content, containsString( url.toString() ) );
         content = IOUtil.toString( url.openStream() );
         assertThat( content, containsString( gav.getArtifactId() ) );
 
         String clas = gav.getClassifier() == null ? "" : "-" + gav.getClassifier();
-        url = new URL( url.toString() + gav.getArtifactId() + "-" + gav.getVersion() + clas + "." + gav.getExtension() );
+        url = Urls.create(url.toString() + gav.getArtifactId() + "-" + gav.getVersion() + clas + "." + gav.getExtension(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         assertThat( content, containsString( url.toString() ) );
     }
 
     private void checkBrowse( Gav gav )
         throws Exception
     {
-        URL url = new URL( nexusBaseUrl + "service/local/repositories/" + REPO_TEST_HARNESS_REPO + "/content/" );
+        URL url = Urls.create(nexusBaseUrl + "service/local/repositories/" + REPO_TEST_HARNESS_REPO + "/content/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         String content = IOUtil.toString( url.openStream() );
         assertThat( content, containsString( url.toString() ) );
         assertThat( content, containsString( gav.getGroupId() ) );
 
-        url = new URL( url.toString() + gav.getGroupId() + "/" );
+        url = Urls.create(url.toString() + gav.getGroupId() + "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         content = IOUtil.toString( url.openStream() );
         assertThat( content, containsString( url.toString() ) );
         assertThat( content, containsString( gav.getArtifactId() ) );
 
-        url = new URL( url.toString() + gav.getArtifactId() + "/" );
+        url = Urls.create(url.toString() + gav.getArtifactId() + "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         content = IOUtil.toString( url.openStream() );
         assertThat( content, containsString( url.toString() ) );
         assertThat( content, containsString( gav.getVersion() ) );
 
-        url = new URL( url.toString() + gav.getVersion() + "/" );
+        url = Urls.create(url.toString() + gav.getVersion() + "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         content = IOUtil.toString( url.openStream() );
         assertThat( content, containsString( url.toString() ) );
         assertThat( content, containsString( gav.getArtifactId() ) );

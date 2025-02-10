@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.deploy.nexus429;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -177,7 +179,7 @@ public class Nexus429WagonDeployPrivilegeIT
         // check the services url too, ( just the GET for now )
         // just check the parent dir, incase this is a SNAPSHOT repo
         Response response =
-            RequestFacade.sendMessage( new URL( this.getNexusTestRepoServiceUrl() + gav.getGroupId().replace( '.', '/' ) + "/" + gav.getArtifactId() + "/" + gav.getVersion() + "/"),
+            RequestFacade.sendMessage( Urls.create(this.getNexusTestRepoServiceUrl() + gav.getGroupId().replace( '.', '/' ) + "/" + gav.getArtifactId() + "/" + gav.getVersion() + "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
                                        Method.GET, null );
         Assert.assertEquals( "Artifact should have been downloaded", response.getStatus().getCode(), 200 );
         

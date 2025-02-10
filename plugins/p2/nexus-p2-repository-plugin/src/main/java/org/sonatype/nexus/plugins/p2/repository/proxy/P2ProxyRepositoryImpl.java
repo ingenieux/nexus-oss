@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.plugins.p2.repository.proxy;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -390,7 +392,7 @@ public class P2ProxyRepositoryImpl
     private AbstractStorageItem getMirrorsItemRemote( final String mirrorsURL )
         throws MalformedURLException, RemoteAccessException, RemoteStorageException, ItemNotFoundException
     {
-        final URL url = new URL( mirrorsURL );
+        final URL url = Urls.create(mirrorsURL, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         final ResourceStoreRequest request = new ResourceStoreRequest( url.getFile() );
         final String baseUrl = getBaseMirrorsURL( url );
         final AbstractStorageItem mirrorsItem = getRemoteStorage().retrieveItem( this, request, baseUrl );

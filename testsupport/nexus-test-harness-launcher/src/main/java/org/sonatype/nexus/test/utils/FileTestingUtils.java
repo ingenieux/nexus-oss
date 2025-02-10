@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.test.utils;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -193,7 +195,7 @@ public class FileTestingUtils
 
         try
         {
-            URL url = new URL( args[0] );
+            URL url = Urls.create(args[0], Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             LOG.info( createSHA1FromURL( url ) );
         }
         catch ( Exception e )

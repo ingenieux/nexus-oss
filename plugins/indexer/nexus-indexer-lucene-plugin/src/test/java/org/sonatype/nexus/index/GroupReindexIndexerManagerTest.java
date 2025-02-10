@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.index;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.net.URL;
 
@@ -30,7 +32,7 @@ public class GroupReindexIndexerManagerTest
 
         GroupRepository group = (GroupRepository) repositoryRegistry.getRepository( "public" );
 
-        File groupRoot = new File( new URL( group.getLocalUrl() ).toURI() );
+        File groupRoot = new File( Urls.create(group.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toURI() );
         File index = new File( groupRoot, ".index" );
 
         File indexFile = new File( index, "nexus-maven-repository-index.gz" );
@@ -46,7 +48,7 @@ public class GroupReindexIndexerManagerTest
 
         // copy some _new_ stuff, not found in any of the members
         File sourceApacheSnapshotsRoot = new File( getBasedir(), "src/test/resources/reposes/apache-snapshots-2" );
-        File snapshotsRoot = new File( new URL( snapshots.getLocalUrl() ).toURI() );
+        File snapshotsRoot = new File( Urls.create(snapshots.getLocalUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toURI() );
         copyDirectory( sourceApacheSnapshotsRoot, snapshotsRoot );
         indexerManager.reindexRepository( null, group.getId(), false );
 

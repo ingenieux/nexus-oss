@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.task.nexus977tasks;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.Matchers.hasItems;
 
 import java.io.File;
@@ -43,8 +45,8 @@ public class Nexus977GroupOfGroupsRebuildMavenMetadataTaskIT
         TaskScheduleUtil.runTask( "RebuildMavenMetadata-snapshot", RebuildMavenMetadataTaskDescriptor.ID, repo );
 
         File metadataFile =
-            downloadFile( new URL( nexusBaseUrl + "content/repositories/g4/"
-                + "nexus977tasks/project/maven-metadata.xml" ), "target/downloads/nexus977" );
+            downloadFile( Urls.create(nexusBaseUrl + "content/repositories/g4/"
+                + "nexus977tasks/project/maven-metadata.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), "target/downloads/nexus977" );
 
         final FileInputStream in = new FileInputStream( metadataFile );
         Metadata metadata = MetadataBuilder.read( in );

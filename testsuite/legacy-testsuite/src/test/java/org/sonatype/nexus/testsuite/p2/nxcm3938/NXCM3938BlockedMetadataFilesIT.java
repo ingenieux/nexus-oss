@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.nxcm3938;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -72,7 +74,7 @@ public class NXCM3938BlockedMetadataFilesIT
         try
         {
             downloadFile(
-                new URL( getRepositoryUrl( getTestRepositoryId() ) + name ),
+                Urls.create(getRepositoryUrl( getTestRepositoryId() ) + name, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
                 downloadedFile.getAbsolutePath()
             );
         }
