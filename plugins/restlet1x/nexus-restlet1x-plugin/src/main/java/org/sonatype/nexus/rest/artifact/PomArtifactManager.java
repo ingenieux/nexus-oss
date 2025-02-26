@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.security.SecureRandom;
 import java.util.Random;
 
 import org.codehaus.plexus.util.IOUtil;
@@ -49,7 +50,7 @@ public class PomArtifactManager
 
     private static final int STATE_GAV_PARSED = 2;
 
-    private static final Random identifierGenerator = new Random();
+    private static final Random identifierGenerator = new SecureRandom();
 
     public PomArtifactManager( File tmpStorage )
     {
