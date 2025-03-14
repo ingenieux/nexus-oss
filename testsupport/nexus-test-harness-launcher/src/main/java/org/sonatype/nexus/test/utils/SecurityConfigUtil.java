@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.test.utils;
 
+import io.github.pixee.security.xstream.HardeningConverter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -91,6 +92,7 @@ public class SecurityConfigUtil
         Collections.sort( roleB.getPrivileges() );
 
         XStream xStream = new XStream();
+        xStream.registerConverter(new HardeningConverter());
         String roleStringA = xStream.toXML( roleA );
         String roleStringB = xStream.toXML( roleB );
 

@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.client.internal.rest;
 
+import io.github.pixee.security.xstream.HardeningConverter;
 import org.sonatype.nexus.client.internal.msg.ErrorMessage;
 import org.sonatype.nexus.client.internal.msg.ErrorResponse;
 import org.sonatype.nexus.rest.model.XStreamConfiguratorLightweight;
@@ -34,6 +35,7 @@ public class NexusXStreamFactory
     public XStream createForXml()
     {
         final XStream xstream = new XStream( new LookAheadXppDriver() );
+        xstream.registerConverter(new HardeningConverter());
         xstream.setMode( XStream.NO_REFERENCES );
         xstream.autodetectAnnotations( false );
         return xstream;
