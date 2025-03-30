@@ -12,6 +12,7 @@
  */
 package org.osgi.impl.bundle.obr.resource;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.*;
 import java.util.*;
 
@@ -52,7 +53,7 @@ public class Manifest extends Hashtable {
 	void parse(Reader in) throws IOException {
 		BufferedReader rdr = new BufferedReader(in);
 		String current = " ";
-		String buffer = rdr.readLine();
+		String buffer = BoundedLineReader.readLine(rdr, 5_000_000);
 		int section = 0;
 		if (buffer != null && !buffer.startsWith("Manifest-Version")) {
 /*[mcculls] ignore
@@ -70,7 +71,7 @@ public class Manifest extends Hashtable {
 				section += entry(buffer);
 				buffer = current;
 			}
-			current = rdr.readLine();
+			current = BoundedLineReader.readLine(rdr, 5_000_000);
 		}
 		entry(buffer);
 	}

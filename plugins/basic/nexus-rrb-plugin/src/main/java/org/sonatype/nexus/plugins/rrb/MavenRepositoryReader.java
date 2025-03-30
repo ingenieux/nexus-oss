@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.plugins.rrb;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -246,7 +247,7 @@ public class MavenRepositoryReader
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 buff.append(line).append("\n");
             }
 
