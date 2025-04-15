@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.file.Files;
 
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
@@ -70,7 +71,7 @@ public class DefaultObrResourceWriter
         this.mimeSupport = mimeSupport;
 
         // use a temporary file while we are streaming resources
-        file = File.createTempFile( "obr", ".xml", temporaryDirectory );
+        file = Files.createTempFile(temporaryDirectory.toPath(), "obr", ".xml").toFile();
         pw = new PrintWriter( new BufferedWriter( new OutputStreamWriter( new FileOutputStream( file ), "UTF-8" ) ) );
 
         repository = uid.getRepository();

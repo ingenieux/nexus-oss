@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -425,6 +426,6 @@ public abstract class AbstractProxyTestEnvironment
         final File tmpDir = new File( getWorkHomeDir(), "ftemp" );
         tmpDir.mkdirs();
 
-        return File.createTempFile( prefix, sufix, tmpDir );
+        return Files.createTempFile(tmpDir.toPath(), prefix, sufix).toFile();
     }
 }

@@ -15,6 +15,7 @@ package org.sonatype.nexus.plugins.p2.repository.metadata;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -92,7 +93,7 @@ public class MetadataUtils
     private static Xpp3Dom parseJarItem( final StorageFileItem item, final String jarPath )
         throws IOException, XmlPullParserException
     {
-        final File file = File.createTempFile( "p2file", "zip" );
+        final File file = Files.createTempFile("p2file", "zip").toFile();
         try
         {
             final InputStream is = item.getInputStream();

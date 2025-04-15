@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -531,8 +532,7 @@ public class DefaultAttributesHandler
                     {
                         // unpack the file
                         tmpFile =
-                            File.createTempFile( "px-" + item.getName(), ".tmp",
-                                applicationConfiguration.getTemporaryDirectory() );
+                            Files.createTempFile(applicationConfiguration.getTemporaryDirectory().toPath(), "px-" + item.getName(), ".tmp").toFile();
 
                         inputStream = content.getContent();
 
