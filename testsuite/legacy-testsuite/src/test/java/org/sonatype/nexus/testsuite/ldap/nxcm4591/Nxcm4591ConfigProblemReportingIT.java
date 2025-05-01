@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.testsuite.ldap.nxcm4591;
 
+import io.github.pixee.security.ZipSecurity;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
@@ -104,7 +105,7 @@ public class Nxcm4591ConfigProblemReportingIT
         assertThat( attachments.values(), hasSize( 1 ) );
         final byte[] attachment = attachments.values().iterator().next();
 
-        final ZipInputStream zip = new ZipInputStream( new ByteArrayInputStream( attachment ) );
+        final ZipInputStream zip = ZipSecurity.createHardenedInputStream(new ByteArrayInputStream( attachment ));
         try {
             ZipEntry entry;
             while ( ( entry = zip.getNextEntry() ) != null && !entry.getName().equals( "ldap.xml" ) )
