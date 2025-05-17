@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.meclipse1299;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.sonatype.sisu.litmus.testsupport.hamcrest.FileMatchers.contains;
@@ -43,7 +45,7 @@ public class MECLIPSE1299P2CompositeRepoMergeRulesIT
         }
 
         downloadFile(
-            new URL( getRepositoryUrl( getTestRepositoryId() ) + "/artifacts.xml" ),
+            Urls.create(getRepositoryUrl( getTestRepositoryId() ) + "/artifacts.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             artifactsXmlFile.getAbsolutePath()
         );
         assertThat( artifactsXmlFile, exists() );

@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.obr.metadata;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.CharBuffer;
@@ -205,7 +207,7 @@ public class DefaultObrResourceReader
 
             if ( breadcrumbs.size() < parser.getMaxDepth() )
             {
-                visit( new ReferencedObrSite( new URL( parser.getMetadataUrl(), url ) ), calculateMaxDepth( depth ) );
+                visit( new ReferencedObrSite( Urls.create(parser.getMetadataUrl(), url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS) ), calculateMaxDepth( depth ) );
             }
         }
         catch ( final XmlPullParserException e )

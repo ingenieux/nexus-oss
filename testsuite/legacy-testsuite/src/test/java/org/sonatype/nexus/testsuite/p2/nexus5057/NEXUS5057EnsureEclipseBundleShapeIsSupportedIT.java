@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.nexus5057;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -62,7 +64,7 @@ public class NEXUS5057EnsureEclipseBundleShapeIsSupportedIT
 
         // ensure link created
         final File file = downloadFile(
-            new URL( getNexusTestRepoUrl() + "/.meta/p2/plugins/test.nexus5057_1.0.0.jar" ),
+            Urls.create(getNexusTestRepoUrl() + "/.meta/p2/plugins/test.nexus5057_1.0.0.jar", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             new File( "target/downloads/" + this.getClass().getSimpleName() + "/test.nexus5057_1.0.0.jar" )
                 .getCanonicalPath()
         );

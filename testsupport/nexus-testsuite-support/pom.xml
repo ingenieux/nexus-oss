@@ -70,6 +70,10 @@
       <artifactId>nexus-groovyremote-client</artifactId>
       <version>${nexus.version}</version>
     </dependency>
+    <dependency>
+      <groupId>io.github.pixee</groupId>
+      <artifactId>java-security-toolkit</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.test.utils;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.sonatype.nexus.test.utils.NexusRequestMatchers.isSuccessful;
@@ -235,7 +237,7 @@ public class RoutesMessageUtil
     public static Response delete( String resourceUri )
         throws IOException
     {
-        return RequestFacade.sendMessage( new URL( resourceUri ), Method.DELETE, null );
+        return RequestFacade.sendMessage( Urls.create(resourceUri, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.DELETE, null );
     }
 
 }

@@ -12,6 +12,8 @@
  */
 package org.osgi.impl.bundle.obr.resource;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
@@ -112,8 +114,8 @@ public class BundleInfo {
 			resource.setURL(bundleJar.toURL());
 			resource.setFile(bundleJar);
 */
-			URL location = new URL("jar:" + remoteUrl + "!/");
-			resource.setURL(new URL(remoteUrl));
+			URL location = Urls.create("jar:" + remoteUrl + "!/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
+			resource.setURL(Urls.create(remoteUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
 
 			doReferences(resource, location);
 			doSize(resource);
@@ -201,7 +203,7 @@ public class BundleInfo {
 
 	URL toURL(URL location, String source) {
 		try {
-			return new URL(location, source);
+			return Urls.create(location, source, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 		} catch (Exception e) {
 /*[mcculls] ignore
 			System.err.println("Error in converting url: " + location + " : "

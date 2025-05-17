@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.maven.nexus4970;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.sonatype.nexus.test.utils.MavenMetadataHelper.assertEquals;
 import static org.sonatype.nexus.test.utils.MavenMetadataHelper.getMetadata;
 
@@ -49,7 +51,7 @@ public class Nexus4970InvalidMetadataMergeOnGroupsIT
         FileUtils.copyDirectory( r2Files, r2Storage );
 
         final File mergedMetadata = downloadFile(
-            new URL( nexusBaseUrl + "content/groups/g/itext/itext/maven-metadata.xml" ),
+            Urls.create(nexusBaseUrl + "content/groups/g/itext/itext/maven-metadata.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nexus4970/maven-metadata.xml"
         );
 

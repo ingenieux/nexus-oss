@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.obr.metadata;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.net.URL;
 
@@ -45,7 +47,7 @@ public class DefaultObrParser
         URL contextUrl = metadataUrl;
         if ( relative || "file".equals( contextUrl.getProtocol() ) )
         {
-            contextUrl = new URL( "file:" + site.getMetadataPath() );
+            contextUrl = Urls.create("file:" + site.getMetadataPath(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         }
 
         obr = new RepositoryImpl( contextUrl );

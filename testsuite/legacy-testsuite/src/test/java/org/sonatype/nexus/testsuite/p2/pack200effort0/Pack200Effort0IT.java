@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.pack200effort0;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -33,7 +35,7 @@ public class Pack200Effort0IT
         throws IOException
     {
         downloadFile(
-            new URL( getNexusTestRepoUrl() + "empty.jar.pack.gz" ),
+            Urls.create(getNexusTestRepoUrl() + "empty.jar.pack.gz", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             new File( "target/pack200effort0.jar.pack.gz" ).getCanonicalPath()
         );
     }

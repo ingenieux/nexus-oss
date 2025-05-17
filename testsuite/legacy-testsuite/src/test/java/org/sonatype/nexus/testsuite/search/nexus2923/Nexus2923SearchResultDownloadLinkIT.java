@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.search.nexus2923;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
@@ -82,6 +84,6 @@ public class Nexus2923SearchResultDownloadLinkIT
         throws Exception
     {
         // use sendMessage because this is a non-service-URL (?)
-        RequestFacade.sendMessage( new URL( link ), Method.GET, null, ResponseMatchers.respondsWithStatusCode( 307 ) ).release();
+        RequestFacade.sendMessage( Urls.create(link, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null, ResponseMatchers.respondsWithStatusCode( 307 ) ).release();
     }
 }

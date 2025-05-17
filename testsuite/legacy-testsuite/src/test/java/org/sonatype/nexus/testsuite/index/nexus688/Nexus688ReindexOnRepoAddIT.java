@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.index.nexus688;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -222,18 +224,18 @@ public class Nexus688ReindexOnRepoAddIT
         // url = new URL( repositoryUrl + OLD_INDEX_FILE + ".md5" );
         // downloadFromRepository( url, "target/downloads/index.zip.md5", repoId, shouldSucceed );
 
-        url = new URL( repositoryUrl + NEW_INDEX_FILE );
+        url = Urls.create(repositoryUrl + NEW_INDEX_FILE, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         downloadFromRepository( url, "target/downloads/index.gz", repoId, shouldSucceed );
-        url = new URL( repositoryUrl + NEW_INDEX_FILE + ".sha1" );
+        url = Urls.create(repositoryUrl + NEW_INDEX_FILE + ".sha1", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         downloadFromRepository( url, "target/downloads/index.gz.sha1", repoId, shouldSucceed );
-        url = new URL( repositoryUrl + NEW_INDEX_FILE + ".md5" );
+        url = Urls.create(repositoryUrl + NEW_INDEX_FILE + ".md5", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         downloadFromRepository( url, "target/downloads/index.gz.md5", repoId, shouldSucceed );
 
-        url = new URL( repositoryUrl + INDEX_PROPERTIES );
+        url = Urls.create(repositoryUrl + INDEX_PROPERTIES, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         downloadFromRepository( url, "target/downloads/index.properties", repoId, shouldSucceed );
-        url = new URL( repositoryUrl + INDEX_PROPERTIES + ".sha1" );
+        url = Urls.create(repositoryUrl + INDEX_PROPERTIES + ".sha1", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         downloadFromRepository( url, "target/downloads/index.properties.sha1", repoId, shouldSucceed );
-        url = new URL( repositoryUrl + INDEX_PROPERTIES + ".md5" );
+        url = Urls.create(repositoryUrl + INDEX_PROPERTIES + ".md5", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         downloadFromRepository( url, "target/downloads/index.properties.md5", repoId, shouldSucceed );
     }
 

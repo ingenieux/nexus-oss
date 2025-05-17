@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.index.nexus3638;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.URL;
 
 import org.apache.maven.index.artifact.Gav;
@@ -44,9 +46,9 @@ public class Downloader
         {
             // it.downloadSnapshotArtifact( "nexus3638", gav, new File( "target/downloads/nexus3638/" + i ) );
             it.downloadFile(
-                new URL( AbstractNexusIntegrationTest.nexusBaseUrl
+                Urls.create(AbstractNexusIntegrationTest.nexusBaseUrl
                     + AbstractNexusIntegrationTest.REPOSITORY_RELATIVE_URL + "nexus3638"
-                        + "/org/apache/maven/plugins/maven-invoker-plugin/1.6-SNAPSHOT/maven-invoker-plugin-1.6-20100922.124315-3.jar" ),
+                        + "/org/apache/maven/plugins/maven-invoker-plugin/1.6-SNAPSHOT/maven-invoker-plugin-1.6-20100922.124315-3.jar", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
                 "target/downloads/nexus3638" );
 
         }

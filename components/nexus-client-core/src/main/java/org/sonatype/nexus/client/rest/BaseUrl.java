@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.client.rest;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -84,7 +86,7 @@ public class BaseUrl
     public static BaseUrl baseUrlFrom( final String url )
         throws MalformedURLException
     {
-        return baseUrlFrom( new URL( Check.notBlank( url, "URL" ) ) );
+        return baseUrlFrom( Urls.create(Check.notBlank( url, "URL" ), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS) );
     }
 
     public static BaseUrl baseUrlFrom( final URL url )

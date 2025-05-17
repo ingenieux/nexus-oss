@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.repo.nexus3709;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.URL;
 
 import org.apache.maven.index.artifact.Gav;
@@ -39,7 +41,7 @@ public class Nexus3709FileTypeValidationIT
             this.getRelitiveArtifactPath( new Gav( "nexus3709.foo.bar", "goodzip", "1.0.0", null, "zip", null, null,
                 null, false, null, false, null ) );
         String url = this.getRepositoryUrl( this.getTestRepositoryId() ) + relativePath;
-        Response response = RequestFacade.sendMessage( new URL( url ), Method.GET, null );
+        Response response = RequestFacade.sendMessage( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
 
         Assert.assertEquals( 200, response.getStatus().getCode() );
     }
@@ -52,7 +54,7 @@ public class Nexus3709FileTypeValidationIT
             this.getRelitiveArtifactPath( new Gav( "nexus3709.foo.bar", "badzip", "1.0.0", null, "zip", null, null,
                 null, false, null, false, null ) );
         String url = this.getRepositoryUrl( this.getTestRepositoryId() ) + relativePath;
-        Response response = RequestFacade.sendMessage( new URL( url ), Method.GET, null );
+        Response response = RequestFacade.sendMessage( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
 
         Assert.assertEquals( 404, response.getStatus().getCode() );
     }
@@ -65,7 +67,7 @@ public class Nexus3709FileTypeValidationIT
             this.getRelitiveArtifactPath( new Gav( "nexus3709.foo.bar", "goodjar", "1.0.0", null, "jar", null, null,
                 null, false, null, false, null ) );
         String url = this.getRepositoryUrl( this.getTestRepositoryId() ) + relativePath;
-        Response response = RequestFacade.sendMessage( new URL( url ), Method.GET, null );
+        Response response = RequestFacade.sendMessage( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
 
         Assert.assertEquals( 200, response.getStatus().getCode() );
     }
@@ -78,7 +80,7 @@ public class Nexus3709FileTypeValidationIT
             this.getRelitiveArtifactPath( new Gav( "nexus3709.foo.bar", "badjar", "1.0.0", null, "jar", null, null,
                 null, false, null, false, null ) );
         String url = this.getRepositoryUrl( this.getTestRepositoryId() ) + relativePath;
-        Response response = RequestFacade.sendMessage( new URL( url ), Method.GET, null );
+        Response response = RequestFacade.sendMessage( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
 
         Assert.assertEquals( 404, response.getStatus().getCode() );
     }
@@ -91,7 +93,7 @@ public class Nexus3709FileTypeValidationIT
             this.getRelitiveArtifactPath( new Gav( "nexus3709.foo.bar", "goodpom", "1.0.0", null, "pom", null, null,
                 null, false, null, false, null ) );
         String url = this.getRepositoryUrl( this.getTestRepositoryId() ) + relativePath;
-        Response response = RequestFacade.sendMessage( new URL( url ), Method.GET, null );
+        Response response = RequestFacade.sendMessage( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
 
         Assert.assertEquals( 200, response.getStatus().getCode() );
     }
@@ -104,7 +106,7 @@ public class Nexus3709FileTypeValidationIT
             this.getRelitiveArtifactPath( new Gav( "nexus3709.foo.bar", "badpom", "1.0.0", null, "pom", null, null,
                 null, false, null, false, null ) );
         String url = this.getRepositoryUrl( this.getTestRepositoryId() ) + relativePath;
-        Response response = RequestFacade.sendMessage( new URL( url ), Method.GET, null );
+        Response response = RequestFacade.sendMessage( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
 
         Assert.assertEquals( 404, response.getStatus().getCode() );
     }

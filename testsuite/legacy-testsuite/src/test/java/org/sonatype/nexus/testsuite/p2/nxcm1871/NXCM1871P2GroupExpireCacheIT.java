@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.p2.nxcm1871;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -44,7 +46,7 @@ public class NXCM1871P2GroupExpireCacheIT
     {
         // check original content
         final File f1 = downloadFile(
-            new URL( getGroupUrl( getTestRepositoryId() ) + "/content.xml" ),
+            Urls.create(getGroupUrl( getTestRepositoryId() ) + "/content.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nxcm1871/1/content.xml"
         );
         assertThat( f1, exists() );
@@ -71,7 +73,7 @@ public class NXCM1871P2GroupExpireCacheIT
 
         // make sure nexus has the right content after reindex
         final File f2 = downloadFile(
-            new URL( getGroupUrl( getTestRepositoryId() ) + "/content.xml" ),
+            Urls.create(getGroupUrl( getTestRepositoryId() ) + "/content.xml", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS),
             "target/downloads/nxcm1871/2/content.xml"
         );
         assertThat( f2, exists() );

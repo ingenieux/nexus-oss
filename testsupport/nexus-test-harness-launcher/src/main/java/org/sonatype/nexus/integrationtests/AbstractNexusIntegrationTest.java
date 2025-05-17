@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.integrationtests;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -1025,7 +1027,7 @@ public abstract class AbstractNexusIntegrationTest
         }
 
         File file = FileUtils.createTempFile( gav.getArtifactId(), '.' + gav.getExtension(), parentDir );
-        RequestFacade.downloadFile( new URL( serviceURI ), file.getAbsolutePath() );
+        RequestFacade.downloadFile( Urls.create(serviceURI, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), file.getAbsolutePath() );
 
         return file;
     }
@@ -1050,7 +1052,7 @@ public abstract class AbstractNexusIntegrationTest
         InputStream stream = null;
         try
         {
-            response = RequestFacade.sendMessage( new URL( url ), Method.GET, null );
+            response = RequestFacade.sendMessage( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
             if ( response.getStatus().isError() )
             {
                 return null;
@@ -1102,7 +1104,7 @@ public abstract class AbstractNexusIntegrationTest
                                      String classifier, String targetDirectory )
         throws IOException
     {
-        URL url = new URL( baseUrl + this.getRelitiveArtifactPath( groupId, artifact, version, type, classifier ) );
+        URL url = Urls.create(baseUrl + this.getRelitiveArtifactPath( groupId, artifact, version, type, classifier ), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
         String classifierPart = ( classifier != null ) ? "-" + classifier : "";
         return this.downloadFile( url, targetDirectory + "/" + artifact + "-" + version + classifierPart + "." + type );

@@ -13,6 +13,8 @@
 package org.sonatype.nexus.proxy.maven.routing.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -83,7 +85,7 @@ public class RemoteScrapeStrategy
         boolean isValidHttpUrl;
         try
         {
-            final URL remoteUrl = new URL( remoteRepositoryRootUrl );
+            final URL remoteUrl = Urls.create(remoteRepositoryRootUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             isValidHttpUrl =
                 "http".equalsIgnoreCase( remoteUrl.getProtocol() )
                     || "https".equalsIgnoreCase( remoteUrl.getProtocol() );

@@ -12,6 +12,8 @@
  */
 package org.sonatype.security.realms.kenai.config;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -178,7 +180,7 @@ public class DefaultKenaiRealmConfiguration
         {
             try
             {
-                new URL( config.getBaseUrl() );
+                Urls.create(config.getBaseUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             }
             catch ( MalformedURLException e )
             {

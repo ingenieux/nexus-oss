@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.testsuite.config.nexus606;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -97,7 +99,7 @@ public class Nexus606DownloadLogsAndConfigFilesIT
         Assert.assertNotNull( "security.xml", securityXmlConfigResource );
 
         // check the config now...
-        response = RequestFacade.sendMessage( new URL( nexusXmlConfigResource.getResourceURI() ), Method.GET, null );
+        response = RequestFacade.sendMessage( Urls.create(nexusXmlConfigResource.getResourceURI(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
         Assert.assertEquals( "Status: ", response.getStatus().getCode(), 200 );
 
         String sha1Expected = FileTestingUtils.createSHA1FromStream( response.getEntity().getStream() );
@@ -109,7 +111,7 @@ public class Nexus606DownloadLogsAndConfigFilesIT
     private void downloadAndConfirmLog( String logURI, String name )
         throws Exception
     {
-        Response response = RequestFacade.sendMessage( new URL( logURI ), Method.GET, null );
+        Response response = RequestFacade.sendMessage( Urls.create(logURI, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), Method.GET, null );
         Assert.assertEquals( "Request URI: " + logURI + " Status: ", response.getStatus().getCode(), 200 );
         InputStream stream = response.getEntity().getStream();
         if ( stream == null )

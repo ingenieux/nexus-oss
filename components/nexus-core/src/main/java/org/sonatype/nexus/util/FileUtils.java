@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.util;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
@@ -148,7 +150,7 @@ public class FileUtils
             // Failed w/ straight file, now time to try URL
             try
             {
-                if ( !validFile( new File( new URL( url ).getFile() ) ) )
+                if ( !validFile( new File( Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).getFile() ) ) )
                 {
                     result = false;
                 }
@@ -204,7 +206,7 @@ public class FileUtils
         {
             try
             {
-                URL url = new URL( urlPath );
+                URL url = Urls.create(urlPath, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                 try
                 {
                     return new File( url.toURI() );
