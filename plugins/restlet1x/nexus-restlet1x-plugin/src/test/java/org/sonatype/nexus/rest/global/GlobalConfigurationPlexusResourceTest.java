@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.rest.global;
 
+import io.github.pixee.security.xstream.HardeningConverter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -39,6 +40,7 @@ public class GlobalConfigurationPlexusResourceTest
 
         // make sure the configuration resource configures xstream to unescape
         final XStream xStream = new XStream();
+        xStream.registerConverter(new HardeningConverter());
         testSubject.configureXStream( xStream );
 
         final String xml = xStream.toXML( settings );

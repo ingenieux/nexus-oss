@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.test.utils;
 
+import io.github.pixee.security.xstream.HardeningConverter;
 import org.sonatype.nexus.rest.MIndexerXStreamConfigurator;
 import org.sonatype.nexus.rest.model.XStreamConfigurator;
 import org.sonatype.plexus.rest.xstream.json.JsonOrgHierarchicalStreamDriver;
@@ -32,6 +33,7 @@ public class XStreamFactory
     public static XStream getXmlXStream()
     {
         XStream xmlXStream = new XStream( new LookAheadXppDriver() );
+        xmlXStream.registerConverter(new HardeningConverter());
         initXStream( xmlXStream );
 
         return xmlXStream;
