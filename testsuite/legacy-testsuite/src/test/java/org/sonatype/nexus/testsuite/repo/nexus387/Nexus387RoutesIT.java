@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.testsuite.repo.nexus387;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -131,7 +132,7 @@ public class Nexus387RoutesIT
         throws IOException
     {
         BufferedReader bReader = new BufferedReader( new FileReader( file ) );
-        String line = bReader.readLine().trim(); // only need one line
+        String line = BoundedLineReader.readLine(bReader, 5_000_000).trim(); // only need one line
         bReader.close();
 
         return line;

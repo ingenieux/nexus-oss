@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.plugins.rrb.parsers;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -35,7 +36,7 @@ abstract class RemoteRepositoryParserTestAbstract
         try
         {
             String line = null;
-            while ( ( line = input.readLine() ) != null )
+            while ( ( line = BoundedLineReader.readLine(input, 5_000_000) ) != null )
             {
                 content.append( line );
                 content.append( System.getProperty( "line.separator" ) );

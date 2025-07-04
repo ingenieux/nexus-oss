@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.integrationtests;
 
+import io.github.pixee.security.BoundedLineReader;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -495,7 +496,7 @@ public abstract class AbstractNexusIntegrationTest
             writer = new FileWriter( tmpFile );
 
             String line = null;
-            while ( ( line = bufferedFileReader.readLine() ) != null )
+            while ( ( line = BoundedLineReader.readLine(bufferedFileReader, 5_000_000) ) != null )
             {
                 writer.write( line.replaceAll( findString, replaceString ) );
                 writer.write( "\n" ); // new line

@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.rest.feeds.sources;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -154,7 +155,7 @@ public class ErrorWarningFeedSource
         {
             final BufferedReader reader =
                 Files.newReader( logFile, Charset.forName( "UTF-8" ) );
-            String logLine = reader.readLine();
+            String logLine = BoundedLineReader.readLine(reader, 5_000_000);
             while ( logLine != null )
             {
                 if ( logLine.contains( " WARN " ) || logLine.contains( " ERROR " ) )
@@ -198,7 +199,7 @@ public class ErrorWarningFeedSource
                         entries.remove( 0 );
                     }
                 }
-                logLine = reader.readLine();
+                logLine = BoundedLineReader.readLine(reader, 5_000_000);
             }
         }
         catch ( Throwable e )

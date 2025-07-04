@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.plugins.rrb;
 
+import io.github.pixee.security.BoundedLineReader;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -120,7 +121,7 @@ public class MavenRepositoryReaderIT
                 BufferedReader reader = new BufferedReader( new InputStreamReader( stream ) );
 
                 String line = null;
-                while ( ( line = reader.readLine() ) != null )
+                while ( ( line = BoundedLineReader.readLine(reader, 5_000_000) ) != null )
                 {
                     result.append( line ).append( System.getProperty( "line.separator" ) );
                 }
