@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 
 import org.codehaus.plexus.util.FileUtils;
 import org.sonatype.nexus.proxy.item.ContentLocator;
@@ -51,7 +52,7 @@ public class FileContentLocator
     public FileContentLocator( final String mimeType )
         throws IOException
     {
-        this( File.createTempFile( "nx-tmp-content-locator", "tmp" ), mimeType, true );
+        this( Files.createTempFile("nx-tmp-content-locator", "tmp").toFile(), mimeType, true );
     }
 
     /**

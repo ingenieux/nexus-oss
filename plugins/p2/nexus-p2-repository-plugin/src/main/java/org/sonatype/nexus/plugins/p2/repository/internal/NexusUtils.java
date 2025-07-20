@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -174,7 +175,7 @@ public class NexusUtils
         throws IOException
     {
         File tempP2Repository;
-        tempP2Repository = File.createTempFile( "nexus-p2-repository-plugin", "" );
+        tempP2Repository = Files.createTempFile("nexus-p2-repository-plugin", "").toFile();
         tempP2Repository.delete();
         tempP2Repository.mkdirs();
         return tempP2Repository;

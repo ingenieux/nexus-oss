@@ -15,6 +15,7 @@ package org.sonatype.nexus.unpack.internal;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -137,7 +138,7 @@ public class UnpackPlexusResource
 
             for ( final FileItem fileItem : files )
             {
-                final File tempFile = File.createTempFile( "unzip", ".zip" );
+                final File tempFile = Files.createTempFile("unzip", ".zip").toFile();
                 try
                 {
                     copyToFile( fileItem, tempFile );
