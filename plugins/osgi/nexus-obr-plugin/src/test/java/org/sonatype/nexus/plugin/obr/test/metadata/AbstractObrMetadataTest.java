@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.plugin.obr.test.metadata;
 
+import io.github.pixee.security.ZipSecurity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -101,7 +102,7 @@ public abstract class AbstractObrMetadataTest
                 if ( "application/zip".equalsIgnoreCase( conn.getContentType() ) )
                 {
                     // assume metadata is the first entry in the zipfile
-                    final ZipInputStream zis = new ZipInputStream( conn.getInputStream() );
+                    final ZipInputStream zis = ZipSecurity.createHardenedInputStream(conn.getInputStream());
                     zis.getNextEntry();
                     return zis;
                 }

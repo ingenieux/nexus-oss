@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.proxy.maven.metadata;
 
+import io.github.pixee.security.ZipSecurity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -311,7 +312,7 @@ abstract public class AbstractMetadataHelper
             if ( exists( jarPath ) )
             {
                 InputStream jar = retrieveContent( jarPath );
-                ZipInputStream zip = new ZipInputStream( jar );
+                ZipInputStream zip = ZipSecurity.createHardenedInputStream(jar);
                 try
                 {
                     ZipEntry entry;
